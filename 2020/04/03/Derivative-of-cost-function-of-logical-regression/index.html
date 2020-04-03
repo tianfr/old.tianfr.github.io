@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Recently I have some misconception of Logistic Regression so I reviewed it and tried to do some mathematical derivations manually. Generally Speaking In general, suppose we have \(m\) examples and \">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Derivative of cost function of logical regression">
+<meta property="og:url" content="http://yoursite.com/2020/04/03/Derivative-of-cost-function-of-logical-regression/index.html">
+<meta property="og:site_name" content="CalmCat">
+<meta property="og:description" content="Recently I have some misconception of Logistic Regression so I reviewed it and tried to do some mathematical derivations manually. Generally Speaking In general, suppose we have \(m\) examples and \">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-03T08:52:16.000Z">
+<meta property="article:modified_time" content="2020-04-03T14:39:05.390Z">
+<meta property="article:author" content="Tian Fengrui">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/04/03/Derivative-of-cost-function-of-logical-regression/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Derivative of cost function of logical regression | CalmCat</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CalmCat</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/03/Derivative-of-cost-function-of-logical-regression/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tian Fengrui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CalmCat">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Derivative of cost function of logical regression
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-04-03 16:52:16 / Modified: 22:39:05" itemprop="dateCreated datePublished" datetime="2020-04-03T16:52:16+08:00">2020-04-03</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Recently I have some misconception of Logistic Regression so I reviewed it and tried to do some mathematical derivations manually.</p>
+<h1 id="generally-speaking">Generally Speaking</h1>
+<p>In general, suppose we have <span class="math inline">\(m\)</span> examples and <span class="math inline">\(n\)</span> parameters in each example. The <strong>Cost Function</strong> of Logistic Regression is <span class="math display">\[
+J{(\theta)}=-\frac{1}{m}\sum_{i=1}^{m}log(h_{\theta}(x^{(i)})+(1-y^{(i)})log(1-h_\theta(x^{(i)}))
+\]</span> in which <span class="math inline">\(x^{(i)}\)</span>represents the features of <em><span class="math inline">\(i^{th}\)</span></em> example, <em><span class="math inline">\(y^{(i)}\)</span></em> denotes the label of <em><span class="math inline">\(i^{th}\)</span></em> example, $$</p>
+(h_(x^{(i)})) =() =-(1+e<sup>{-</sup>{T}x^{(i)}}) <span class="math display">\[
+and
+\]</span>
+<span class="math display">\[\begin{aligned}
+&amp;\log(1-h_\theta(x^{(i)}))
+\\&amp;= \log(1-\frac{1}{1+e^{-\theta^Tx^{(i)}}}))
+\\&amp;=\log(\frac{e^{-\theta^Tx^{(i)}}}{1+e^{-\theta^Tx^{(i)}}})
+\\&amp;=\log(e^{-\theta^Tx^{(i)}})-\log (1+e^{-\theta^Tx^{(i)}})
+\\&amp;=-\theta^Tx^{(i)}-\log (1+e^{-\theta^Tx^{(i)}})\tag{2}
+\end{aligned}\]</span>
+<p>$$</p>
+In formula<span class="math inline">\((1)(2)\)</span>, we use <strong><em>Sigmoid Function</em></strong> as activate function, so we use updated <span class="math inline">\(\log(h_\theta(x^{(i)}))\)</span> and <span class="math inline">\(\log(1-h_\theta(x^{(i)})\)</span> by formula <span class="math inline">\((1)(2)\)</span> as: $$
+<span class="math display">\[\begin{aligned}
+J(\theta)=-\frac{1}{m}\sum_{i=1}^{m}\Big[-y^{(i)}\log(1+e^{-\theta^{T}x^{(i)}})+(1-y^{(i)})\Big(-\theta^Tx^{(i)}-\log(1+e^{-\theta^Tx^{(i)}})\Big)\Big]
+\tag{3}
+
+\end{aligned}\]</span>
+<span class="math display">\[
+# Mathmatic Deduction of  $J(\theta)$
+we could observe and further do some mathematical derivation on formula$(3)$:
+\]</span>
+<span class="math display">\[\begin{aligned}
+J(\theta)&amp;=-\frac{1}{m}\sum_{i=1}^{m}[-y^{(i)}\log(1+e^{-\theta^{T}x^{(i)}})-\theta^Tx^{(i)}+y^{(i)}\theta^Tx^{(i)} -\log(1+e^{-\theta^Tx^{(i)}}) + y^{(i)}\log(1+e^{-\theta^Tx^{(i)}})
+\\&amp;=-\frac{1}{m}\sum_{i=1}^{m}[  -   \theta^Tx^{(i)}  +  y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{-\theta^Tx^{(i)}})\tag{4}
+\end{aligned}\]</span>
+<span class="math display">\[
+Here **note that $\theta^Tx^{(i)}=\log(e^{\theta^Tx{(i)}})$**, we continue doing some derivations using formula$(4)$:
+\]</span>
+<span class="math display">\[\begin{aligned}
+J(\theta)&amp;=-\frac{1}{m}\sum_{i=1}^{m}[  -   \log(e^{\theta^Tx{(i)}})  +  y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{-\theta^Tx^{(i)}})
+\\
+&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}\theta^Tx^{(i)}   -  \log\Big((1 + e^{-\theta^Tx^{(i)}})(e^{\theta^Tx{(i)}})\Big)\Big]
+\\
+&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{\theta^Tx^{(i)}})\Big]
+
+ 
+\end{aligned}\]</span>
+<p>$$</p>
+so the Cost Function of Logistic Regression can be written as: $$
+<span class="math display">\[\begin{aligned}
+J(\theta)
+&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{\theta^Tx^{(i)}})\Big]
+\tag{5}
+
+ 
+\end{aligned}\]</span>
+<p>$$</p>
+<h1 id="mathematic-deduction-of-fracpartial-jpartial-theta_j">Mathematic Deduction of <span class="math inline">\(\frac{\partial J}{\partial \theta_j}\)</span></h1>
+<p>From above process, we can calculate <span class="math inline">\(\frac{\partial J}{\partial \theta_i}\)</span> more easily using formula(5): <span class="math display">\[
+\begin{aligned}
+\frac{\partial J}{\partial \theta_j}&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}x_j^{(i)}   -  \frac{x^{(i)}_je^{\theta^Tx^{(i)}}}{(1 + e^{\theta^Tx^{(i)}})}\Big]
+\\&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}x_j^{(i)}   -  \frac{x^{(i)}_j}{(1 + e^{-\theta^Tx^{(i)}})}\Big]
+\end{aligned}
+\tag{6}
+\]</span> <strong>Notice that:</strong> <span class="math display">\[
+h_\theta(x^{(i)})
+=\frac{1}{1+e^{-\theta^{T}x^{(i)}}}
+\]</span> so the formula<span class="math inline">\((6)\)</span> can be written as:</p>
+<span class="math display">\[
+\begin{aligned}
+\frac{\partial J}{\partial \theta_j}&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}x_j^{(i)}   -  h_\theta(x^{(i)})x^{(i)}_j\Big]
+\\
+&amp;=\frac{1}{m}\sum_{i=1}^{m}\Big[ x_j^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big]
+\end{aligned}
+\tag{7}
+\]</span> Until now, we get the <span class="math inline">\(\frac{\partial J}{\partial \theta_j}\)</span>. If we want to use MATLAB or Python to program, we could use some <strong><em>Liner Algebra</em></strong> knowledge to deduct it more deeply: $$
+<span class="math display">\[\begin{aligned}
+\left[
+    \begin{matrix}
+\frac{\partial J}{\partial \theta_0}\\
+
+\frac{\partial J}{\partial \theta_1}\\
+\frac{\partial J}{\partial \theta_2}\\
+\vdots\\
+\frac{\partial J}{\partial \theta_n}\\
+
+\end{matrix}
+
+\right]
+&amp;=\frac{1}{m}\left[
+    \begin{matrix}
+        \sum_{i=1}^{m}\Big( x_0^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big)\\
+        \sum_{i=1}^{m}\Big( x_1^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big)\\
+        \sum_{i=1}^{m}\Big( x_2^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big)\\
+        \vdots\\
+        \sum_{i=1}^{m}\Big( x_n^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big)\\
+
+    \end{matrix}
+    \right]\tag{8}
+    \end{aligned}\]</span>
+<span class="math display">\[
+In formula $(8)$, we found that the $\big( h_\theta(x^{(i)})-y^{(i)}\big)$ is a *scalar(single number)*, and the $x_j^{(i)}$denotes the ***$j^{th}$*** parameter in the ***$i^{th}$*** example, which also is  *constant*, so we can concluded that:
+\]</span>
+<span class="math display">\[\begin{aligned}
+\left[
+    \begin{matrix}
+\frac{\partial J}{\partial \theta_0}\\
+
+\frac{\partial J}{\partial \theta_1}\\
+\frac{\partial J}{\partial \theta_2}\\
+\vdots\\
+\frac{\partial J}{\partial \theta_n}\\
+
+\end{matrix}
+
+\right]
+&amp;=\frac{1}{m}\sum^m_{i=1}\big(h_\theta(x^{(i)}-y^{(i)})x^{(i)}\big)\tag{9}
+\end{aligned}\]</span>
+<span class="math display">\[
+which 
+\]</span> x^{(i)}= <span class="math display">\[
+Finally using the above formula we have:
+\]</span>
+<span class="math display">\[\begin{aligned}
+\left[
+    \begin{matrix}
+\frac{\partial J}{\partial \theta_0}\\
+
+\frac{\partial J}{\partial \theta_1}\\
+\frac{\partial J}{\partial \theta_2}\\
+\vdots\\
+\frac{\partial J}{\partial \theta_n}\\
+
+\end{matrix}
+
+\right]
+=\frac{1}{m}X^T(h_\theta(x)-y)\tag{10}
+\end{aligned}\]</span>
+<span class="math display">\[
+where 
+\]</span>
+<span class="math display">\[\begin{aligned}
+&amp;X=
+\left[
+    \begin{matrix}
+        x^{(1)}_0 &amp; x^{(1)}_1 &amp; x^{(1)}_2 &amp; x^{(1)}_3 &amp; \cdots &amp; x^{(1)}_n\\
+        x^{(2)}_0 &amp; x^{(2)}_1 &amp; x^{(2)}_2 &amp; x^{(2)}_3 &amp; \cdots &amp; x^{(2)}_n\\
+        x^{(3)}_0 &amp; x^{(3)}_1 &amp; x^{(3)}_2 &amp; x^{(3)}_3 &amp; \cdots &amp; x^{(3)}_n\\
+        \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+        x^{(m)}_0 &amp; x^{(m)}_1 &amp; x^{(m)}_2 &amp; x^{(m)}_3 &amp; \cdots &amp; x^{(m)}_n\\
+
+    \end{matrix}
+\right]
+\\\\\\
+&amp;h_\theta(x)-y = \left[
+    \begin{matrix}
+        h_\theta(x^{(1)})-y\\
+        h_\theta(x^{(2)})-y\\
+        h_\theta(x^{(3)})-y\\
+        \vdots\\
+        h_\theta(x^{(m)})-y\\
+    \end{matrix}    
+    \right]
+\end{aligned}\]</span>
+<p>$$ We could easily program Logistic Regession Derivatives using formula <span class="math inline">\((10)\)</span>.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/02/Curriculum-Vitae/" rel="prev" title="Curriculum Vitae">
+      <i class="fa fa-chevron-left"></i> Curriculum Vitae
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#generally-speaking"><span class="nav-number">1.</span> <span class="nav-text">Generally Speaking</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mathematic-deduction-of-fracpartial-jpartial-theta_j"><span class="nav-number">2.</span> <span class="nav-text">Mathematic Deduction of \(\frac{\partial J}{\partial \theta_j}\)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Tian Fengrui</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tian Fengrui</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

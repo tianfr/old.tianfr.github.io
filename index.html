@@ -1,610 +1,734 @@
 <!DOCTYPE html>
-
-
-<html lang="en" >
-
-
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-    
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>
-     Hexo
-  </title>
-  <meta name="generator" content="hexo-theme-yilia-plus">
-  
-  <link rel="shortcut icon" href="/favicon.ico" />
-  
-  
-<link rel="stylesheet" href="/dist/main.css">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-  
-<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/main.css">
 
-  
-  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
-  
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="CalmCat">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="CalmCat">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Tian Fengrui">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>CalmCat</title>
   
 
-  
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
 
 </head>
 
-</html>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
 
-<body>
-  <div id="app">
-    <main class="content on">
-      
-<section class="cover">
-    
-      
-      <a class="forkMe" href="https://github.com/Shen-Yu/hexo-theme-ayer"
-        target="_blank"><img width="149" height="149" src="/images/forkme.png"
-          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
-    
-  <div class="cover-frame">
-    <div class="bg-box">
-      <img src="/images/cover1.jpg" alt="image frame" />
-    </div>
-    <div class="cover-inner text-center text-white">
-      <h1><a href="/">Hexo</a></h1>
-      <div id="subtitle-box">
-        
-        <span id="subtitle"></span>
-        
-      </div>
-      <div>
-        
-      </div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
-  <div class="cover-learn-more">
-    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CalmCat</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
   </div>
-</section>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
 
-<div id="main">
-  <section class="outer">
-  <article class="articles">
-    
-    
-    
-    
-    <article id="post-Curriculum-Vitae" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
 
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/04/02/Curriculum-Vitae/"
-    >Curriculum Vitae</a> 
-</h2>
- 
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
 
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
     </header>
-    
 
     
-    <div class="article-meta">
-      <a href="/2020/04/02/Curriculum-Vitae/" class="article-date">
-  <time datetime="2020-04-01T17:07:56.000Z" itemprop="datePublished">2020-04-02</time>
-</a>
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
       
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/03/Derivative-of-cost-function-of-logical-regression/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tian Fengrui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CalmCat">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/03/Derivative-of-cost-function-of-logical-regression/" class="post-title-link" itemprop="url">Derivative of cost function of logical regression</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-04-03 16:52:16 / Modified: 22:39:05" itemprop="dateCreated datePublished" datetime="2020-04-03T16:52:16+08:00">2020-04-03</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-      
+          <p>Recently I have some misconception of Logistic Regression so I reviewed it and tried to do some mathematical derivations manually.</p>
+<h1 id="generally-speaking">Generally Speaking</h1>
+<p>In general, suppose we have <span class="math inline">\(m\)</span> examples and <span class="math inline">\(n\)</span> parameters in each example. The <strong>Cost Function</strong> of Logistic Regression is <span class="math display">\[
+J{(\theta)}=-\frac{1}{m}\sum_{i=1}^{m}log(h_{\theta}(x^{(i)})+(1-y^{(i)})log(1-h_\theta(x^{(i)}))
+\]</span> in which <span class="math inline">\(x^{(i)}\)</span>represents the features of <em><span class="math inline">\(i^{th}\)</span></em> example, <em><span class="math inline">\(y^{(i)}\)</span></em> denotes the label of <em><span class="math inline">\(i^{th}\)</span></em> example, $$</p>
+(h_(x^{(i)})) =() =-(1+e<sup>{-</sup>{T}x^{(i)}}) <span class="math display">\[
+and
+\]</span>
+<span class="math display">\[\begin{aligned}
+&amp;\log(1-h_\theta(x^{(i)}))
+\\&amp;= \log(1-\frac{1}{1+e^{-\theta^Tx^{(i)}}}))
+\\&amp;=\log(\frac{e^{-\theta^Tx^{(i)}}}{1+e^{-\theta^Tx^{(i)}}})
+\\&amp;=\log(e^{-\theta^Tx^{(i)}})-\log (1+e^{-\theta^Tx^{(i)}})
+\\&amp;=-\theta^Tx^{(i)}-\log (1+e^{-\theta^Tx^{(i)}})\tag{2}
+\end{aligned}\]</span>
+<p>$$</p>
+In formula<span class="math inline">\((1)(2)\)</span>, we use <strong><em>Sigmoid Function</em></strong> as activate function, so we use updated <span class="math inline">\(\log(h_\theta(x^{(i)}))\)</span> and <span class="math inline">\(\log(1-h_\theta(x^{(i)})\)</span> by formula <span class="math inline">\((1)(2)\)</span> as: $$
+<span class="math display">\[\begin{aligned}
+J(\theta)=-\frac{1}{m}\sum_{i=1}^{m}\Big[-y^{(i)}\log(1+e^{-\theta^{T}x^{(i)}})+(1-y^{(i)})\Big(-\theta^Tx^{(i)}-\log(1+e^{-\theta^Tx^{(i)}})\Big)\Big]
+\tag{3}
+
+\end{aligned}\]</span>
+<span class="math display">\[
+# Mathmatic Deduction of  $J(\theta)$
+we could observe and further do some mathematical derivation on formula$(3)$:
+\]</span>
+<span class="math display">\[\begin{aligned}
+J(\theta)&amp;=-\frac{1}{m}\sum_{i=1}^{m}[-y^{(i)}\log(1+e^{-\theta^{T}x^{(i)}})-\theta^Tx^{(i)}+y^{(i)}\theta^Tx^{(i)} -\log(1+e^{-\theta^Tx^{(i)}}) + y^{(i)}\log(1+e^{-\theta^Tx^{(i)}})
+\\&amp;=-\frac{1}{m}\sum_{i=1}^{m}[  -   \theta^Tx^{(i)}  +  y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{-\theta^Tx^{(i)}})\tag{4}
+\end{aligned}\]</span>
+<span class="math display">\[
+Here **note that $\theta^Tx^{(i)}=\log(e^{\theta^Tx{(i)}})$**, we continue doing some derivations using formula$(4)$:
+\]</span>
+<span class="math display">\[\begin{aligned}
+J(\theta)&amp;=-\frac{1}{m}\sum_{i=1}^{m}[  -   \log(e^{\theta^Tx{(i)}})  +  y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{-\theta^Tx^{(i)}})
+\\
+&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}\theta^Tx^{(i)}   -  \log\Big((1 + e^{-\theta^Tx^{(i)}})(e^{\theta^Tx{(i)}})\Big)\Big]
+\\
+&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{\theta^Tx^{(i)}})\Big]
+
+ 
+\end{aligned}\]</span>
+<p>$$</p>
+so the Cost Function of Logistic Regression can be written as: $$
+<span class="math display">\[\begin{aligned}
+J(\theta)
+&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{\theta^Tx^{(i)}})\Big]
+\tag{5}
+
+ 
+\end{aligned}\]</span>
+<p>$$</p>
+<h1 id="mathematic-deduction-of-fracpartial-jpartial-theta_j">Mathematic Deduction of <span class="math inline">\(\frac{\partial J}{\partial \theta_j}\)</span></h1>
+<p>From above process, we can calculate <span class="math inline">\(\frac{\partial J}{\partial \theta_i}\)</span> more easily using formula(5): <span class="math display">\[
+\begin{aligned}
+\frac{\partial J}{\partial \theta_j}&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}x_j^{(i)}   -  \frac{x^{(i)}_je^{\theta^Tx^{(i)}}}{(1 + e^{\theta^Tx^{(i)}})}\Big]
+\\&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}x_j^{(i)}   -  \frac{x^{(i)}_j}{(1 + e^{-\theta^Tx^{(i)}})}\Big]
+\end{aligned}
+\tag{6}
+\]</span> <strong>Notice that:</strong> <span class="math display">\[
+h_\theta(x^{(i)})
+=\frac{1}{1+e^{-\theta^{T}x^{(i)}}}
+\]</span> so the formula<span class="math inline">\((6)\)</span> can be written as:</p>
+<span class="math display">\[
+\begin{aligned}
+\frac{\partial J}{\partial \theta_j}&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}x_j^{(i)}   -  h_\theta(x^{(i)})x^{(i)}_j\Big]
+\\
+&amp;=\frac{1}{m}\sum_{i=1}^{m}\Big[ x_j^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big]
+\end{aligned}
+\tag{7}
+\]</span> Until now, we get the <span class="math inline">\(\frac{\partial J}{\partial \theta_j}\)</span>. If we want to use MATLAB or Python to program, we could use some <strong><em>Liner Algebra</em></strong> knowledge to deduct it more deeply: $$
+<span class="math display">\[\begin{aligned}
+\left[
+    \begin{matrix}
+\frac{\partial J}{\partial \theta_0}\\
+
+\frac{\partial J}{\partial \theta_1}\\
+\frac{\partial J}{\partial \theta_2}\\
+\vdots\\
+\frac{\partial J}{\partial \theta_n}\\
+
+\end{matrix}
+
+\right]
+&amp;=\frac{1}{m}\left[
+    \begin{matrix}
+        \sum_{i=1}^{m}\Big( x_0^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big)\\
+        \sum_{i=1}^{m}\Big( x_1^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big)\\
+        \sum_{i=1}^{m}\Big( x_2^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big)\\
+        \vdots\\
+        \sum_{i=1}^{m}\Big( x_n^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big)\\
+
+    \end{matrix}
+    \right]\tag{8}
+    \end{aligned}\]</span>
+<span class="math display">\[
+In formula $(8)$, we found that the $\big( h_\theta(x^{(i)})-y^{(i)}\big)$ is a *scalar(single number)*, and the $x_j^{(i)}$denotes the ***$j^{th}$*** parameter in the ***$i^{th}$*** example, which also is  *constant*, so we can concluded that:
+\]</span>
+<span class="math display">\[\begin{aligned}
+\left[
+    \begin{matrix}
+\frac{\partial J}{\partial \theta_0}\\
+
+\frac{\partial J}{\partial \theta_1}\\
+\frac{\partial J}{\partial \theta_2}\\
+\vdots\\
+\frac{\partial J}{\partial \theta_n}\\
+
+\end{matrix}
+
+\right]
+&amp;=\frac{1}{m}\sum^m_{i=1}\big(h_\theta(x^{(i)}-y^{(i)})x^{(i)}\big)\tag{9}
+\end{aligned}\]</span>
+<span class="math display">\[
+which 
+\]</span> x^{(i)}= <span class="math display">\[
+Finally using the above formula we have:
+\]</span>
+<span class="math display">\[\begin{aligned}
+\left[
+    \begin{matrix}
+\frac{\partial J}{\partial \theta_0}\\
+
+\frac{\partial J}{\partial \theta_1}\\
+\frac{\partial J}{\partial \theta_2}\\
+\vdots\\
+\frac{\partial J}{\partial \theta_n}\\
+
+\end{matrix}
+
+\right]
+=\frac{1}{m}X^T(h_\theta(x)-y)\tag{10}
+\end{aligned}\]</span>
+<span class="math display">\[
+where 
+\]</span>
+<span class="math display">\[\begin{aligned}
+&amp;X=
+\left[
+    \begin{matrix}
+        x^{(1)}_0 &amp; x^{(1)}_1 &amp; x^{(1)}_2 &amp; x^{(1)}_3 &amp; \cdots &amp; x^{(1)}_n\\
+        x^{(2)}_0 &amp; x^{(2)}_1 &amp; x^{(2)}_2 &amp; x^{(2)}_3 &amp; \cdots &amp; x^{(2)}_n\\
+        x^{(3)}_0 &amp; x^{(3)}_1 &amp; x^{(3)}_2 &amp; x^{(3)}_3 &amp; \cdots &amp; x^{(3)}_n\\
+        \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+        x^{(m)}_0 &amp; x^{(m)}_1 &amp; x^{(m)}_2 &amp; x^{(m)}_3 &amp; \cdots &amp; x^{(m)}_n\\
+
+    \end{matrix}
+\right]
+\\\\\\
+&amp;h_\theta(x)-y = \left[
+    \begin{matrix}
+        h_\theta(x^{(1)})-y\\
+        h_\theta(x^{(2)})-y\\
+        h_\theta(x^{(3)})-y\\
+        \vdots\\
+        h_\theta(x^{(m)})-y\\
+    \end{matrix}    
+    \right]
+\end{aligned}\]</span>
+<p>$$ We could easily program Logistic Regession Derivatives using formula <span class="math inline">\((10)\)</span>.</p>
+
       
     </div>
-    
 
     
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/02/Curriculum-Vitae/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tian Fengrui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CalmCat">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/02/Curriculum-Vitae/" class="post-title-link" itemprop="url">Curriculum Vitae</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-04-02 01:07:56 / Modified: 01:21:25" itemprop="dateCreated datePublished" datetime="2020-04-02T01:07:56+08:00">2020-04-02</time>
+            </span>
+
+          
+
+        </div>
+      </header>
 
     
-    <div class="article-entry" itemprop="articleBody">
-      
-      
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-      <p>Tian Fengrui</p>
+          <p>Tian Fengrui</p>
 <p>Undergraduate Gender: Male</p>
-<p>Age: 21 </p>
+<p>Age: 21</p>
 <p>Phone: (+86) 18744296191</p>
-<p>GitHub: <a href="https://github.com/tianfr" target="_blank" rel="noopener">https://github.com/tianfr</a> </p>
-<p>Email: <a href="mailto:&#116;&#x69;&#x61;&#x6e;&#x66;&#x72;&#x40;&#111;&#117;&#116;&#108;&#111;&#111;&#x6b;&#46;&#x63;&#x6f;&#x6d;">&#116;&#x69;&#x61;&#x6e;&#x66;&#x72;&#x40;&#111;&#117;&#116;&#108;&#111;&#111;&#x6b;&#46;&#x63;&#x6f;&#x6d;</a></p>
+<p>GitHub: <a href="https://github.com/tianfr" target="_blank" rel="noopener" class="uri">https://github.com/tianfr</a></p>
+<p>Email: <a href="mailto:tianfr@outlook.com" class="email">tianfr@outlook.com</a></p>
 <p>Address: No. 28 Xianning West Road, Xi’an, Shaanxi Province, 710049, China</p>
-<h2 id="Education"><a href="#Education" class="headerlink" title="Education"></a>Education</h2><p><strong>Xi’an Jiaotong University</strong> <em>2017.09-2021.07</em></p>
+<h2 id="education">Education</h2>
+<p><strong>Xi’an Jiaotong University</strong> <em>2017.09-2021.07</em></p>
 <blockquote>
-<p>  <em>Software Engineering</em></p>
+<p><em>Software Engineering</em></p>
 </blockquote>
 <blockquote>
-<p>  GPA:3.49 / 4.0 (Major GPA:3.8)</p>
+<p>GPA:3.49 / 4.0 (Major GPA:3.8)</p>
 </blockquote>
 <p><strong>National University of Singapore</strong></p>
 <blockquote>
-<p>  <em>Data Mining Technology 2019.07</em></p>
+<p><em>Data Mining Technology 2019.07</em></p>
 </blockquote>
 <blockquote>
-<p>  Project Grade: A-</p>
+<p>Project Grade: A-</p>
 </blockquote>
-<h2 id="Research-Experience"><a href="#Research-Experience" class="headerlink" title="Research Experience"></a>Research Experience</h2><h3 id="SoC-Fault-Tolerance-Research-Project-Xi’an-Jiaotong-University"><a href="#SoC-Fault-Tolerance-Research-Project-Xi’an-Jiaotong-University" class="headerlink" title="SoC Fault Tolerance Research Project, Xi’an Jiaotong University"></a>SoC Fault Tolerance Research Project, Xi’an Jiaotong University</h3><blockquote>
-<p>  Participant 2019.04-Present</p>
-</blockquote>
-<ul>
-<li><p>Established and improved a brand-new checkpointing scheme “MsCp” for real-time embedded system which reduced checkpoint number from about 25 to 2~3 and total embedded system overheads by 20% compared to “TsCp” scheme</p>
-</li>
-<li><p>Simulated the effects using MATLAB compared to other 2 checkpointing schemes and analyzed the results on software application average runtime, maximum of tolerant faults and CPU cost time to prove the superiority of “MsCp” scheme in harsh environment</p>
-</li>
-<li><p>Drafted an English paper which proposed our achievement, discussed its effects and revised more than 30 times before submitting to a journal</p>
-</li>
-<li><p>Chenhong TIAN, <strong>Fengrui TIAN</strong>, Xiaozhi DU, Checkpoint Optimization Approach with Application Multiple-state for Real-time Embedded System, <em>TEHNIČKI VJESNIK - TECHNICAL GAZETTE</em>, <strong>submitted (SCI, IF:0.644)</strong></p>
-</li>
-</ul>
-<h3 id="Research-on-Computer-Vision-and-Image-Segmentation-Xi’an-Jiaotong-University"><a href="#Research-on-Computer-Vision-and-Image-Segmentation-Xi’an-Jiaotong-University" class="headerlink" title="Research on Computer Vision and Image Segmentation, Xi’an Jiaotong University"></a>Research on Computer Vision and Image Segmentation, Xi’an Jiaotong University</h3><blockquote>
-<p>  Participant 2019.11-Present</p>
+<h2 id="research-experience">Research Experience</h2>
+<h3 id="soc-fault-tolerance-research-project-xian-jiaotong-university">SoC Fault Tolerance Research Project, Xi’an Jiaotong University</h3>
+<blockquote>
+<p>Participant 2019.04-Present</p>
 </blockquote>
 <ul>
-<li><p>Studied basic knowledge of Computer Vision, including: Convolution Neural Network, Graph Neural Network, Machine Learning Algorithm under the director of assistant professor Tian Zhiqiang</p>
-</li>
-<li><p>Built an interactive segmentation application based on Analyzation of 2 CVPR papers about Object Annotation and end-to-end network</p>
-</li>
+<li><p>Established and improved a brand-new checkpointing scheme "MsCp" for real-time embedded system which reduced checkpoint number from about 25 to 2~3 and total embedded system overheads by 20% compared to "TsCp" scheme</p></li>
+<li><p>Simulated the effects using MATLAB compared to other 2 checkpointing schemes and analyzed the results on software application average runtime, maximum of tolerant faults and CPU cost time to prove the superiority of "MsCp" scheme in harsh environment</p></li>
+<li><p>Drafted an English paper which proposed our achievement, discussed its effects and revised more than 30 times before submitting to a journal</p></li>
+<li><p>Chenhong TIAN, <strong>Fengrui TIAN</strong>, Xiaozhi DU, Checkpoint Optimization Approach with Application Multiple-state for Real-time Embedded System, <em>TEHNIČKI VJESNIK - TECHNICAL GAZETTE</em>, <strong>submitted (SCI, IF:0.644)</strong></p></li>
 </ul>
-<h3 id="Mining-Communities-in-Big-Data-with-Algorithms-National-University-of-Singapore"><a href="#Mining-Communities-in-Big-Data-with-Algorithms-National-University-of-Singapore" class="headerlink" title="Mining Communities in Big-Data with Algorithms, National University of Singapore"></a>Mining Communities in Big-Data with Algorithms, National University of Singapore</h3><blockquote>
-<p>  Team Leader 2019.07</p>
+<h3 id="research-on-computer-vision-and-image-segmentation-xian-jiaotong-university">Research on Computer Vision and Image Segmentation, Xi’an Jiaotong University</h3>
+<blockquote>
+<p>Participant 2019.11-Present</p>
 </blockquote>
 <ul>
-<li><p>Organized other 3 group members to detect potential connections between movies and books with Douban user data using data mining algorithms such as Markov Chain, Minimum Spanning Tree, etc.</p>
-</li>
-<li><p>Analyzed the relationship between 105 user groups and 8 different types of books and the relationship between 117 movies and different groups of users and then established the connection “books-users-movies” based on above 2 relationships</p>
-</li>
-<li><p>Conducted more than 1,000 different kinds of books, more than 10 000 user information messages, and about 3 million movie comments on Douban Website using Python Web Crawler technology and cleaned the data after crawling to contract the data size from millions to tens of thousands</p>
-</li>
-<li><p>Led the team to complete 3 PPTs, 3 project reports, 1 project website and more than 50 python code files</p>
-</li>
-<li><p><a href="https://github.com/Yee172/Books2Movies" target="_blank" rel="noopener">Project in Github</a> <a href="https://yee172.github.io/Books2Movies/" target="_blank" rel="noopener">Project Home Page</a></p>
-</li>
+<li><p>Studied basic knowledge of Computer Vision, including: Convolution Neural Network, Graph Neural Network, Machine Learning Algorithm under the director of assistant professor Tian Zhiqiang</p></li>
+<li><p>Built an interactive segmentation application based on Analyzation of 2 CVPR papers about Object Annotation and end-to-end network</p></li>
 </ul>
-<h3 id="Website-for-the-16th-China-Model-United-Nations-Conference-Xi’an-Jiaotong-University"><a href="#Website-for-the-16th-China-Model-United-Nations-Conference-Xi’an-Jiaotong-University" class="headerlink" title="Website for the 16th China Model United Nations Conference, Xi’an Jiaotong University"></a>Website for the 16th China Model United Nations Conference, Xi’an Jiaotong University</h3><blockquote>
-<p>  Technical Director 2019.3-2019.10</p>
+<h3 id="mining-communities-in-big-data-with-algorithms-national-university-of-singapore">Mining Communities in Big-Data with Algorithms, National University of Singapore</h3>
+<blockquote>
+<p>Team Leader 2019.07</p>
 </blockquote>
 <ul>
-<li><p>Managed the team to build conference official website and conference news website which is used to glean personal information of nearly 800 conference delegates, observers and faculty advisors from about 150 universities, and publish up-to-date conference news</p>
-</li>
-<li><p>Led team for daily website maintenance about half a year to ensure the normal running of 2 websites before, during and after the conference</p>
-</li>
+<li><p>Organized other 3 group members to detect potential connections between movies and books with Douban user data using data mining algorithms such as Markov Chain, Minimum Spanning Tree, etc.</p></li>
+<li><p>Analyzed the relationship between 105 user groups and 8 different types of books and the relationship between 117 movies and different groups of users and then established the connection "books-users-movies" based on above 2 relationships</p></li>
+<li><p>Conducted more than 1,000 different kinds of books, more than 10 000 user information messages, and about 3 million movie comments on Douban Website using Python Web Crawler technology and cleaned the data after crawling to contract the data size from millions to tens of thousands</p></li>
+<li><p>Led the team to complete 3 PPTs, 3 project reports, 1 project website and more than 50 python code files</p></li>
+<li><p><a href="https://github.com/Yee172/Books2Movies" target="_blank" rel="noopener">Project in Github</a> <a href="https://yee172.github.io/Books2Movies/" target="_blank" rel="noopener">Project Home Page</a></p></li>
 </ul>
-<h2 id="Leadership-Experience"><a href="#Leadership-Experience" class="headerlink" title="Leadership Experience"></a>Leadership Experience</h2><h3 id="Public-Speaking-Association-PSA-Xi’an-Jiaotong-University"><a href="#Public-Speaking-Association-PSA-Xi’an-Jiaotong-University" class="headerlink" title="Public Speaking Association (PSA), Xi’an Jiaotong University"></a>Public Speaking Association (PSA), Xi’an Jiaotong University</h3><blockquote>
-<p>  Vice Chairman 2017.11-Present</p>
+<h3 id="website-for-the-16th-china-model-united-nations-conference-xian-jiaotong-university">Website for the 16th China Model United Nations Conference, Xi’an Jiaotong University</h3>
+<blockquote>
+<p>Technical Director 2019.3-2019.10</p>
 </blockquote>
 <ul>
-<li><p>Responsible for the recruitment, weekly training and activities of the PSA.</p>
-</li>
-<li><p>Awarded in 3 MUN conferences and organized the 9th and 10th Xi’an Jiaotong University Model United Nations Conference. During the conference, responsible for more than 400 representatives and volunteers, 3 hours of dinner planning, etc.</p>
-</li>
+<li><p>Managed the team to build conference official website and conference news website which is used to glean personal information of nearly 800 conference delegates, observers and faculty advisors from about 150 universities, and publish up-to-date conference news</p></li>
+<li><p>Led team for daily website maintenance about half a year to ensure the normal running of 2 websites before, during and after the conference</p></li>
 </ul>
-<h3 id="The-16th-China-Model-United-Nations-Conference-Xi’an-China"><a href="#The-16th-China-Model-United-Nations-Conference-Xi’an-China" class="headerlink" title="The 16th China Model United Nations Conference, Xi’an, China"></a>The 16th China Model United Nations Conference, Xi’an, China</h3><blockquote>
-<p>  Technical Director 2019.3-2019.10</p>
+<h2 id="leadership-experience">Leadership Experience</h2>
+<h3 id="public-speaking-association-psa-xian-jiaotong-university">Public Speaking Association (PSA), Xi’an Jiaotong University</h3>
+<blockquote>
+<p>Vice Chairman 2017.11-Present</p>
 </blockquote>
 <ul>
-<li><p>Participated in planning of the whole meeting, whose budget is up to 800,000 Yuan. As the Technical Director responsible for coordinating department members to manage about 1000 participants’ information and conference information delivery from media department</p>
-</li>
-<li><p>Managed the team to conduct about 2000-page conference documents, 2 video clips for opening and closing ceremony, about 15 posters and program arrangement in Social Event in the evening</p>
-</li>
-<li><p>Organized nearly 300 volunteers who were divided into about 15 different groups during 4-days conference session to improve the quality of conference</p>
-</li>
+<li><p>Responsible for the recruitment, weekly training and activities of the PSA.</p></li>
+<li><p>Awarded in 3 MUN conferences and organized the 9th and 10th Xi'an Jiaotong University Model United Nations Conference. During the conference, responsible for more than 400 representatives and volunteers, 3 hours of dinner planning, etc.</p></li>
 </ul>
-<h2 id="Skills-Certificates-and-Others"><a href="#Skills-Certificates-and-Others" class="headerlink" title="Skills, Certificates and Others"></a>Skills, Certificates and Others</h2><p>The Third Prize Scholarship in Xi’an Jiaotong University <em>2019.8</em></p>
+<h3 id="the-16th-china-model-united-nations-conference-xian-china">The 16th China Model United Nations Conference, Xi’an, China</h3>
+<blockquote>
+<p>Technical Director 2019.3-2019.10</p>
+</blockquote>
+<ul>
+<li><p>Participated in planning of the whole meeting, whose budget is up to 800,000 Yuan. As the Technical Director responsible for coordinating department members to manage about 1000 participants’ information and conference information delivery from media department</p></li>
+<li><p>Managed the team to conduct about 2000-page conference documents, 2 video clips for opening and closing ceremony, about 15 posters and program arrangement in Social Event in the evening</p></li>
+<li><p>Organized nearly 300 volunteers who were divided into about 15 different groups during 4-days conference session to improve the quality of conference</p></li>
+</ul>
+<h2 id="skills-certificates-and-others">Skills, Certificates and Others</h2>
+<p>The Third Prize Scholarship in Xi’an Jiaotong University <em>2019.8</em></p>
 <p>Bronze medal in China College Computing Contest Group Programming Ladder Tournament <em>2018.9</em></p>
-<p>The Third Award for Mathematical Modeling in Xi’an Jiaotong University <em>2019.3</em></p>
-<p>Top 10 in speech contest during the military training in Xi’an Jiaotong University <em>2017.3</em></p>
+<p>The Third Award for Mathematical Modeling in Xi'an Jiaotong University <em>2019.3</em></p>
+<p>Top 10 in speech contest during the military training in Xi'an Jiaotong University <em>2017.3</em></p>
 <p>Volunteer experience in Chinese Association of Automation <em>2018.6-2019.6</em></p>
 
       
-      <!-- reward -->
-      
     </div>
+
     
     
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-
-    </footer>
-
-  </div>
-
-  
-
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
   
   
 
+      
   
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/02/hello-world/">
 
-</article>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tian Fengrui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CalmCat">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/02/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-02 01:03:37" itemprop="dateCreated datePublished" datetime="2020-04-02T01:03:37+08:00">2020-04-02</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
     
-    <article id="post-hello-world" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
     
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/04/02/hello-world/"
-    >Hello World</a> 
-</h2>
- 
-
-    </header>
     
-
-    
-    <div class="article-meta">
-      <a href="/2020/04/02/hello-world/" class="article-date">
-  <time datetime="2020-04-01T17:03:37.489Z" itemprop="datePublished">2020-04-02</time>
-</a>
-      
-      
-      
-      
-    </div>
-    
-
-    
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
+    <div class="post-body" itemprop="articleBody">
 
       
-      <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
+          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
       
-      <!-- reward -->
-      
     </div>
+
     
     
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-
-    </footer>
-
-  </div>
-
-  
-
-  
-  
-  
-
-  
-
-</article>
     
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
   </article>
   
+  
+  
+
 
   
-</section>
-</div>
 
-      <footer class="footer">
-  <div class="outer">
-    <ul class="list-inline">
-      <li>
-        &copy;
-        2015-2020
-        John Doe
-      </li>
-      <li>
-        
-        Powered by
-        
-        
-        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
-        
-      </li>
-    </ul>
-    <ul class="list-inline">
-      <li>
-        
-        
-        <span>
-  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
-  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
-</span>
-        
-      </li>
-      
-      <li>
-        <!-- cnzz统计 -->
-        
-        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
-        
-      </li>
-    </ul>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
-</footer>
-      <div class="float_btns">
-        <div class="totop" id="totop">
-  <i class="ri-arrow-up-line"></i>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Tian Fengrui</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
 </div>
 
-<div class="todark" id="todark">
-  <i class="ri-moon-line"></i>
-</div>
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
 
       </div>
     </main>
-    <aside class="sidebar on">
-      <button class="navbar-toggle"></button>
-<nav class="navbar">
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
   
-  <div class="logo">
-    <a href="/"><img src="/images/ayer-side.svg" alt="Hexo"></a>
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tian Fengrui</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
   </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
   
-  <ul class="nav nav-main">
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/">主页</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/archives">归档</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/categories">分类</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/tags">标签</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="http://shenyu-vip.lofter.com" target="_blank" rel="noopener">摄影</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/2019/about">关于我</a>
-    </li>
-    
-  </ul>
-</nav>
-<nav class="navbar navbar-bottom">
-  <ul class="nav">
-    <li class="nav-item">
-      
-      <a class="nav-item-link nav-item-search"  title="Search">
-        <i class="ri-search-line"></i>
-      </a>
-      
-      
-      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
-        <i class="ri-rss-line"></i>
-      </a>
-      
-    </li>
-  </ul>
-</nav>
-<div class="search-form-wrap">
-  <div class="local-search local-search-plugin">
-  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
-  <div id="local-search-result" class="local-search-result"></div>
-</div>
-</div>
-    </aside>
-    <script>
-      if (window.matchMedia("(max-width: 768px)").matches) {
-        document.querySelector('.content').classList.remove('on');
-        document.querySelector('.sidebar').classList.remove('on');
-      }
-    </script>
-    <div id="mask"></div>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<!-- #reward -->
-<div id="reward">
-  <span class="close"><i class="ri-close-line"></i></span>
-  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
-  <div class="reward-box">
-    
-    <div class="reward-item">
-      <img class="reward-img" src="/images/alipay.jpg">
-      <span class="reward-type">支付宝</span>
-    </div>
-    
-    
-    <div class="reward-item">
-      <img class="reward-img" src="/images/wechat.jpg">
-      <span class="reward-type">微信</span>
-    </div>
-    
-  </div>
-</div>
-    
-<script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
 
 
-<script src="/js/lazyload.min.js"></script>
+<script src="/js/schemes/pisces.js"></script>
 
 
-<script>
-  try {
-    var typed = new Typed("#subtitle", {
-      strings: ['面朝大海，春暖花开', '愿你一生努力，一生被爱', '想要的都拥有，得不到的都释怀'],
-      startDelay: 0,
-      typeSpeed: 200,
-      loop: true,
-      backSpeed: 100,
-      showCursor: true
-    });
-  } catch (err) {
-  }
+<script src="/js/next-boot.js"></script>
 
-</script>
+
+
+
+  
 
 
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
-<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
-
-<script src="/dist/main.js"></script>
-
-
-
-<!-- Root element of PhotoSwipe. Must have class pswp. -->
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    <!-- Background of PhotoSwipe. 
-         It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-
-        <!-- Container that holds slides. 
-            PhotoSwipe keeps only 3 of them in the DOM to save memory.
-            Don't modify these 3 pswp__item elements, data is added later on. -->
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                <!--  Controls are self-explanatory. Order can be changed. -->
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                <!-- element will get class pswp__preloader--active when preloader is running -->
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
-<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
-
-<script>
-    function viewer_init() {
-        let pswpElement = document.querySelectorAll('.pswp')[0];
-        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
-
-        $imgArr.forEach(($em, i) => {
-            $em.onclick = () => {
-                // slider展开状态
-                // todo: 这样不好，后面改成状态
-                if (document.querySelector('.left-col.show')) return
-                let items = []
-                $imgArr.forEach(($em2, i2) => {
-                    let img = $em2.getAttribute('data-idx', i2)
-                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
-                    let title = $em2.getAttribute('alt')
-                    // 获得原图尺寸
-                    const image = new Image()
-                    image.src = src
-                    items.push({
-                        src: src,
-                        w: image.width || $em2.width,
-                        h: image.height || $em2.height,
-                        title: title
-                    })
-                })
-                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
-                    index: parseInt(i)
-                });
-                gallery.init()
-            }
-        })
-    }
-    viewer_init()
-</script>
 
 
 
 
 
-<script src="/js/busuanzi-2.3.pure.min.js"></script>
 
 
 
-<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
 
 
-    
-  </div>
+  
+
+  
+
 </body>
-
 </html>
