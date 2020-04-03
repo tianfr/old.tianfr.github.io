@@ -170,7 +170,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-04-03 16:52:16 / Modified: 22:39:05" itemprop="dateCreated datePublished" datetime="2020-04-03T16:52:16+08:00">2020-04-03</time>
+              <time title="Created: 2020-04-03 16:52:16 / Modified: 23:41:42" itemprop="dateCreated datePublished" datetime="2020-04-03T16:52:16+08:00">2020-04-03</time>
             </span>
 
           
@@ -185,77 +185,67 @@
 
       
           <p>Recently I have some misconception of Logistic Regression so I reviewed it and tried to do some mathematical derivations manually.</p>
-<h1 id="generally-speaking">Generally Speaking</h1>
-<p>In general, suppose we have <span class="math inline">\(m\)</span> examples and <span class="math inline">\(n\)</span> parameters in each example. The <strong>Cost Function</strong> of Logistic Regression is <span class="math display">\[
-J{(\theta)}=-\frac{1}{m}\sum_{i=1}^{m}log(h_{\theta}(x^{(i)})+(1-y^{(i)})log(1-h_\theta(x^{(i)}))
-\]</span> in which <span class="math inline">\(x^{(i)}\)</span>represents the features of <em><span class="math inline">\(i^{th}\)</span></em> example, <em><span class="math inline">\(y^{(i)}\)</span></em> denotes the label of <em><span class="math inline">\(i^{th}\)</span></em> example, $$</p>
-(h_(x^{(i)})) =() =-(1+e<sup>{-</sup>{T}x^{(i)}}) <span class="math display">\[
-and
-\]</span>
-<span class="math display">\[\begin{aligned}
-&amp;\log(1-h_\theta(x^{(i)}))
-\\&amp;= \log(1-\frac{1}{1+e^{-\theta^Tx^{(i)}}}))
-\\&amp;=\log(\frac{e^{-\theta^Tx^{(i)}}}{1+e^{-\theta^Tx^{(i)}}})
-\\&amp;=\log(e^{-\theta^Tx^{(i)}})-\log (1+e^{-\theta^Tx^{(i)}})
-\\&amp;=-\theta^Tx^{(i)}-\log (1+e^{-\theta^Tx^{(i)}})\tag{2}
-\end{aligned}\]</span>
-<p>$$</p>
-In formula<span class="math inline">\((1)(2)\)</span>, we use <strong><em>Sigmoid Function</em></strong> as activate function, so we use updated <span class="math inline">\(\log(h_\theta(x^{(i)}))\)</span> and <span class="math inline">\(\log(1-h_\theta(x^{(i)})\)</span> by formula <span class="math inline">\((1)(2)\)</span> as: $$
-<span class="math display">\[\begin{aligned}
+<h1 id="Generally-Speaking"><a href="#Generally-Speaking" class="headerlink" title="Generally Speaking"></a>Generally Speaking</h1><p>In general, suppose we have $m$ examples and $n$ parameters in each example. The <strong>Cost Function</strong> of Logistic Regression is </p>
+<script type="math/tex; mode=display">
+J{(\theta)}=-\frac{1}{m}\sum_{i=1}^{m}log(h_{\theta}(x^{(i)})+(1-y^{(i)})log(1-h_\theta(x^{(i)}))</script><p>in which $x^{(i)}$represents the features of $i^{th}$ example, $y^{(i)}$ denotes the label of  $i^{th}$ example,</p>
+<script type="math/tex; mode=display">
+\log(h_\theta(x^{(i)}))
+=\log(\frac{1}{1+e^{-\theta^{T}x^{(i)}}})
+=-\log (1+e^{-\theta^{T}x^{(i)}})\tag{1}</script><p>and</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+&\log(1-h_\theta(x^{(i)}))
+\\&= \log(1-\frac{1}{1+e^{-\theta^Tx^{(i)}}}))
+\\&=\log(\frac{e^{-\theta^Tx^{(i)}}}{1+e^{-\theta^Tx^{(i)}}})
+\\&=\log(e^{-\theta^Tx^{(i)}})-\log (1+e^{-\theta^Tx^{(i)}})
+\\&=-\theta^Tx^{(i)}-\log (1+e^{-\theta^Tx^{(i)}})
+\end{align*}\tag{2}</script><p>In formula$(1)(2)$, we use <strong><em>Sigmoid Function</em></strong> as activate function, so we use updated $\log(h_\theta(x^{(i)}))$ and $\log(1-h_\theta(x^{(i)})$ by formula $(1)(2)$ as:</p>
+<script type="math/tex; mode=display">
+\begin{align}
 J(\theta)=-\frac{1}{m}\sum_{i=1}^{m}\Big[-y^{(i)}\log(1+e^{-\theta^{T}x^{(i)}})+(1-y^{(i)})\Big(-\theta^Tx^{(i)}-\log(1+e^{-\theta^Tx^{(i)}})\Big)\Big]
 \tag{3}
 
-\end{aligned}\]</span>
-<span class="math display">\[
-# Mathmatic Deduction of  $J(\theta)$
-we could observe and further do some mathematical derivation on formula$(3)$:
-\]</span>
-<span class="math display">\[\begin{aligned}
-J(\theta)&amp;=-\frac{1}{m}\sum_{i=1}^{m}[-y^{(i)}\log(1+e^{-\theta^{T}x^{(i)}})-\theta^Tx^{(i)}+y^{(i)}\theta^Tx^{(i)} -\log(1+e^{-\theta^Tx^{(i)}}) + y^{(i)}\log(1+e^{-\theta^Tx^{(i)}})
-\\&amp;=-\frac{1}{m}\sum_{i=1}^{m}[  -   \theta^Tx^{(i)}  +  y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{-\theta^Tx^{(i)}})\tag{4}
-\end{aligned}\]</span>
-<span class="math display">\[
-Here **note that $\theta^Tx^{(i)}=\log(e^{\theta^Tx{(i)}})$**, we continue doing some derivations using formula$(4)$:
-\]</span>
-<span class="math display">\[\begin{aligned}
-J(\theta)&amp;=-\frac{1}{m}\sum_{i=1}^{m}[  -   \log(e^{\theta^Tx{(i)}})  +  y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{-\theta^Tx^{(i)}})
+\end{align}</script><h1 id="Mathematic-Deduction-of-J-theta"><a href="#Mathematic-Deduction-of-J-theta" class="headerlink" title="Mathematic Deduction of  $J(\theta)$"></a>Mathematic Deduction of  $J(\theta)$</h1><p>we could observe and further do some mathematical derivation on formula$(3)$:</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+J(\theta)&=-\frac{1}{m}\sum_{i=1}^{m}[-y^{(i)}\log(1+e^{-\theta^{T}x^{(i)}})-\theta^Tx^{(i)}+y^{(i)}\theta^Tx^{(i)} -\log(1+e^{-\theta^Tx^{(i)}}) + y^{(i)}\log(1+e^{-\theta^Tx^{(i)}})
+\\&=-\frac{1}{m}\sum_{i=1}^{m}[  -   \theta^Tx^{(i)}  +  y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{-\theta^Tx^{(i)}})
+\end{align*}\tag{4}</script><p>Here <strong>note that $\theta^Tx^{(i)}=\log(e^{\theta^Tx{(i)}})$</strong>, we continue doing some derivations using formula$(4)$:</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+J(\theta)&=-\frac{1}{m}\sum_{i=1}^{m}[  -   \log(e^{\theta^Tx{(i)}})  +  y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{-\theta^Tx^{(i)}})
 \\
-&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}\theta^Tx^{(i)}   -  \log\Big((1 + e^{-\theta^Tx^{(i)}})(e^{\theta^Tx{(i)}})\Big)\Big]
+&=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}\theta^Tx^{(i)}   -  \log\Big((1 + e^{-\theta^Tx^{(i)}})(e^{\theta^Tx{(i)}})\Big)\Big]
 \\
-&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{\theta^Tx^{(i)}})\Big]
+&=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{\theta^Tx^{(i)}})\Big]
 
- 
-\end{aligned}\]</span>
-<p>$$</p>
-so the Cost Function of Logistic Regression can be written as: $$
-<span class="math display">\[\begin{aligned}
+
+\end{align*}</script><p>So the Cost Function of Logistic Regression can be written as:</p>
+<script type="math/tex; mode=display">
+\begin{align*}
 J(\theta)
-&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{\theta^Tx^{(i)}})\Big]
+&=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{\theta^Tx^{(i)}})\Big]
 \tag{5}
 
- 
-\end{aligned}\]</span>
-<p>$$</p>
-<h1 id="mathematic-deduction-of-fracpartial-jpartial-theta_j">Mathematic Deduction of <span class="math inline">\(\frac{\partial J}{\partial \theta_j}\)</span></h1>
-<p>From above process, we can calculate <span class="math inline">\(\frac{\partial J}{\partial \theta_i}\)</span> more easily using formula(5): <span class="math display">\[
-\begin{aligned}
-\frac{\partial J}{\partial \theta_j}&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}x_j^{(i)}   -  \frac{x^{(i)}_je^{\theta^Tx^{(i)}}}{(1 + e^{\theta^Tx^{(i)}})}\Big]
-\\&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}x_j^{(i)}   -  \frac{x^{(i)}_j}{(1 + e^{-\theta^Tx^{(i)}})}\Big]
-\end{aligned}
-\tag{6}
-\]</span> <strong>Notice that:</strong> <span class="math display">\[
+
+\end{align*}</script><h1 id="Mathematic-Deduction-of-frac-partial-J-partial-theta-j"><a href="#Mathematic-Deduction-of-frac-partial-J-partial-theta-j" class="headerlink" title="Mathematic Deduction of $\frac{\partial J}{\partial \theta_j}$"></a>Mathematic Deduction of $\frac{\partial J}{\partial \theta_j}$</h1><p>From above process, we can calculate $\frac{\partial J}{\partial \theta_i}$ more easily using formula$(5)$:</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\frac{\partial J}{\partial \theta_j}&=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}x_j^{(i)}   -  \frac{x^{(i)}_je^{\theta^Tx^{(i)}}}{(1 + e^{\theta^Tx^{(i)}})}\Big]
+\\&=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}x_j^{(i)}   -  \frac{x^{(i)}_j}{(1 + e^{-\theta^Tx^{(i)}})}\Big]
+\end{align*}\tag{6}</script><p><strong>Notice that:</strong></p>
+<script type="math/tex; mode=display">
 h_\theta(x^{(i)})
-=\frac{1}{1+e^{-\theta^{T}x^{(i)}}}
-\]</span> so the formula<span class="math inline">\((6)\)</span> can be written as:</p>
-<span class="math display">\[
+=\frac{1}{1+e^{-\theta^{T}x^{(i)}}}</script><p>So the formula$(6)$ can be written as:</p>
+<script type="math/tex; mode=display">
 \begin{aligned}
-\frac{\partial J}{\partial \theta_j}&amp;=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}x_j^{(i)}   -  h_\theta(x^{(i)})x^{(i)}_j\Big]
+\frac{\partial J}{\partial \theta_j}&=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}x_j^{(i)}   -  h_\theta(x^{(i)})x^{(i)}_j\Big]
 \\
-&amp;=\frac{1}{m}\sum_{i=1}^{m}\Big[ x_j^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big]
+&=\frac{1}{m}\sum_{i=1}^{m}\Big[ x_j^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big]
 \end{aligned}
-\tag{7}
-\]</span> Until now, we get the <span class="math inline">\(\frac{\partial J}{\partial \theta_j}\)</span>. If we want to use MATLAB or Python to program, we could use some <strong><em>Liner Algebra</em></strong> knowledge to deduct it more deeply: $$
-<span class="math display">\[\begin{aligned}
+\tag{7}</script><p>Until now, we get the $\frac{\partial J}{\partial \theta_j}$. If we want to use MATLAB or Python to program, we could use some <strong>_Liner Algebra_</strong> knowledge to deduct it more deeply:</p>
+<script type="math/tex; mode=display">
+\begin{align}
 \left[
     \begin{matrix}
 \frac{\partial J}{\partial \theta_0}\\
@@ -268,7 +258,7 @@ h_\theta(x^{(i)})
 \end{matrix}
 
 \right]
-&amp;=\frac{1}{m}\left[
+&=\frac{1}{m}\left[
     \begin{matrix}
         \sum_{i=1}^{m}\Big( x_0^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big)\\
         \sum_{i=1}^{m}\Big( x_1^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big)\\
@@ -278,11 +268,9 @@ h_\theta(x^{(i)})
 
     \end{matrix}
     \right]\tag{8}
-    \end{aligned}\]</span>
-<span class="math display">\[
-In formula $(8)$, we found that the $\big( h_\theta(x^{(i)})-y^{(i)}\big)$ is a *scalar(single number)*, and the $x_j^{(i)}$denotes the ***$j^{th}$*** parameter in the ***$i^{th}$*** example, which also is  *constant*, so we can concluded that:
-\]</span>
-<span class="math display">\[\begin{aligned}
+    \end{align}</script><p>In formula $(8)$, we found that the $\big( h_\theta(x^{(i)})-y^{(i)}\big)$ is a <em>scalar(single number)</em>, and the $x_j^{(i)}$denotes the <strong><em>$j^{th}$</em></strong> parameter in the <strong><em>$i^{th}$</em></strong> example, which also is  <em>constant</em>, so we can concluded that:</p>
+<script type="math/tex; mode=display">
+\begin{align}
 \left[
     \begin{matrix}
 \frac{\partial J}{\partial \theta_0}\\
@@ -295,14 +283,21 @@ In formula $(8)$, we found that the $\big( h_\theta(x^{(i)})-y^{(i)}\big)$ is a 
 \end{matrix}
 
 \right]
-&amp;=\frac{1}{m}\sum^m_{i=1}\big(h_\theta(x^{(i)}-y^{(i)})x^{(i)}\big)\tag{9}
-\end{aligned}\]</span>
-<span class="math display">\[
-which 
-\]</span> x^{(i)}= <span class="math display">\[
-Finally using the above formula we have:
-\]</span>
-<span class="math display">\[\begin{aligned}
+&=\frac{1}{m}\sum^m_{i=1}\big(h_\theta(x^{(i)}-y^{(i)})x^{(i)}\big)\tag{9}
+\end{align}</script><p>which </p>
+<script type="math/tex; mode=display">
+x^{(i)}=
+\left[
+\begin{matrix}
+x^{(i)}_0\\
+x^{(i)}_1\\
+x^{(i)}_2\\
+\vdots\\
+x^{(i)}_n\\
+\end{matrix}
+\right]</script><p>Finally using the above formula we have:</p>
+<script type="math/tex; mode=display">
+\begin{align}
 \left[
     \begin{matrix}
 \frac{\partial J}{\partial \theta_0}\\
@@ -316,24 +311,22 @@ Finally using the above formula we have:
 
 \right]
 =\frac{1}{m}X^T(h_\theta(x)-y)\tag{10}
-\end{aligned}\]</span>
-<span class="math display">\[
-where 
-\]</span>
-<span class="math display">\[\begin{aligned}
-&amp;X=
+\end{align}</script><p>where </p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&X=
 \left[
     \begin{matrix}
-        x^{(1)}_0 &amp; x^{(1)}_1 &amp; x^{(1)}_2 &amp; x^{(1)}_3 &amp; \cdots &amp; x^{(1)}_n\\
-        x^{(2)}_0 &amp; x^{(2)}_1 &amp; x^{(2)}_2 &amp; x^{(2)}_3 &amp; \cdots &amp; x^{(2)}_n\\
-        x^{(3)}_0 &amp; x^{(3)}_1 &amp; x^{(3)}_2 &amp; x^{(3)}_3 &amp; \cdots &amp; x^{(3)}_n\\
-        \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-        x^{(m)}_0 &amp; x^{(m)}_1 &amp; x^{(m)}_2 &amp; x^{(m)}_3 &amp; \cdots &amp; x^{(m)}_n\\
+        x^{(1)}_0 & x^{(1)}_1 & x^{(1)}_2 & x^{(1)}_3 & \cdots & x^{(1)}_n\\
+        x^{(2)}_0 & x^{(2)}_1 & x^{(2)}_2 & x^{(2)}_3 & \cdots & x^{(2)}_n\\
+        x^{(3)}_0 & x^{(3)}_1 & x^{(3)}_2 & x^{(3)}_3 & \cdots & x^{(3)}_n\\
+        \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+        x^{(m)}_0 & x^{(m)}_1 & x^{(m)}_2 & x^{(m)}_3 & \cdots & x^{(m)}_n\\
 
     \end{matrix}
 \right]
 \\\\\\
-&amp;h_\theta(x)-y = \left[
+&h_\theta(x)-y = \left[
     \begin{matrix}
         h_\theta(x^{(1)})-y\\
         h_\theta(x^{(2)})-y\\
@@ -342,8 +335,11 @@ where
         h_\theta(x^{(m)})-y\\
     \end{matrix}    
     \right]
-\end{aligned}\]</span>
-<p>$$ We could easily program Logistic Regession Derivatives using formula <span class="math inline">\((10)\)</span>.</p>
+\end{aligned}</script><p>We could easily program Logistic Regression Derivatives using formula $(10)$.</p>
+<h4 id="An-important-detail"><a href="#An-important-detail" class="headerlink" title="An important detail"></a>An important detail</h4><p>Note that $x^{(i)}_0$denotes the <strong>Bias</strong> in every example, which constantly equals to $1$. Nothing considerable <strong>unless</strong> if we add regularization methods for avoiding overfitting problem.</p>
+<h1 id="Examples-in-MATLAB"><a href="#Examples-in-MATLAB" class="headerlink" title="Examples in MATLAB"></a>Examples in MATLAB</h1><p>In this part, I use MATLAB to program the Liner Regression Cost Function. In order to avoid overfitting, I do some regularization operations (L2 regularization) to improve the quality of parameters.</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[J, grad]</span> = <span class="title">lrCostFunction</span><span class="params">(theta, X, y, lambda)</span></span></span><br><span class="line"><span class="comment">%LRCOSTFUNCTION Compute cost and gradient for logistic regression with </span></span><br><span class="line"><span class="comment">%regularization</span></span><br><span class="line"><span class="comment">%   J = LRCOSTFUNCTION(theta, X, y, lambda) computes the cost of using</span></span><br><span class="line"><span class="comment">%   theta as the parameter for regularized logistic regression and the</span></span><br><span class="line"><span class="comment">%   gradient of the cost w.r.t. to the parameters. </span></span><br><span class="line"></span><br><span class="line"><span class="comment">% Initialize some useful values</span></span><br><span class="line">m = <span class="built_in">length</span>(y); <span class="comment">% number of training examples</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% You need to return the following variables correctly </span></span><br><span class="line">J = <span class="number">0</span>;</span><br><span class="line">grad = <span class="built_in">zeros</span>(<span class="built_in">size</span>(theta));</span><br><span class="line"></span><br><span class="line"><span class="comment">% =============================================================</span></span><br><span class="line">h_x = sigmoid(X*theta);</span><br><span class="line"></span><br><span class="line">grad = <span class="number">1</span>/m .*(X' * (h_x - y));</span><br><span class="line">temp = theta; </span><br><span class="line">temp(<span class="number">1</span>) = <span class="number">0</span>;   <span class="comment">% because we don't add anything for j = 0  </span></span><br><span class="line">J = <span class="number">1</span>/m*(sum(-y.*<span class="built_in">log</span>(h_x) - (<span class="number">1</span>-y) .* <span class="built_in">log</span>(<span class="number">1</span>-h_x))) + lambda/(<span class="number">2</span>*m) .* sum(temp.^<span class="number">2</span>);</span><br><span class="line">grad = grad + lambda ./ m .* temp;</span><br><span class="line"></span><br><span class="line"><span class="comment">% =============================================================</span></span><br><span class="line"></span><br><span class="line">grad = grad(:);</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">g</span> = <span class="title">sigmoid</span><span class="params">(z)</span></span></span><br><span class="line"><span class="comment">%SIGMOID Compute sigmoid functoon</span></span><br><span class="line"><span class="comment">%   J = SIGMOID(z) computes the sigmoid of z.</span></span><br><span class="line"></span><br><span class="line">g = <span class="number">1.0</span> ./ (<span class="number">1.0</span> + <span class="built_in">exp</span>(-z));</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -404,87 +400,91 @@ where
       
           <p>Tian Fengrui</p>
 <p>Undergraduate Gender: Male</p>
-<p>Age: 21</p>
+<p>Age: 21 </p>
 <p>Phone: (+86) 18744296191</p>
-<p>GitHub: <a href="https://github.com/tianfr" target="_blank" rel="noopener" class="uri">https://github.com/tianfr</a></p>
-<p>Email: <a href="mailto:tianfr@outlook.com" class="email">tianfr@outlook.com</a></p>
+<p>GitHub: <a href="https://github.com/tianfr" target="_blank" rel="noopener">https://github.com/tianfr</a> </p>
+<p>Email: <a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#x74;&#105;&#x61;&#110;&#x66;&#114;&#64;&#111;&#117;&#116;&#108;&#x6f;&#111;&#107;&#46;&#99;&#111;&#109;">&#x74;&#105;&#x61;&#110;&#x66;&#114;&#64;&#111;&#117;&#116;&#108;&#x6f;&#111;&#107;&#46;&#99;&#111;&#109;</a></p>
 <p>Address: No. 28 Xianning West Road, Xi’an, Shaanxi Province, 710049, China</p>
-<h2 id="education">Education</h2>
-<p><strong>Xi’an Jiaotong University</strong> <em>2017.09-2021.07</em></p>
+<h2 id="Education"><a href="#Education" class="headerlink" title="Education"></a>Education</h2><p><strong>Xi’an Jiaotong University</strong> <em>2017.09-2021.07</em></p>
 <blockquote>
-<p><em>Software Engineering</em></p>
-</blockquote>
-<blockquote>
-<p>GPA:3.49 / 4.0 (Major GPA:3.8)</p>
+<p>  <em>Software Engineering</em></p>
+<p>  GPA:3.49 / 4.0 (Major GPA:3.8)</p>
 </blockquote>
 <p><strong>National University of Singapore</strong></p>
 <blockquote>
-<p><em>Data Mining Technology 2019.07</em></p>
+<p>  <em>Data Mining Technology 2019.07</em></p>
+<p>  Project Grade: A-</p>
 </blockquote>
-<blockquote>
-<p>Project Grade: A-</p>
-</blockquote>
-<h2 id="research-experience">Research Experience</h2>
-<h3 id="soc-fault-tolerance-research-project-xian-jiaotong-university">SoC Fault Tolerance Research Project, Xi’an Jiaotong University</h3>
-<blockquote>
-<p>Participant 2019.04-Present</p>
+<h2 id="Research-Experience"><a href="#Research-Experience" class="headerlink" title="Research Experience"></a>Research Experience</h2><h3 id="SoC-Fault-Tolerance-Research-Project-Xi’an-Jiaotong-University"><a href="#SoC-Fault-Tolerance-Research-Project-Xi’an-Jiaotong-University" class="headerlink" title="SoC Fault Tolerance Research Project, Xi’an Jiaotong University"></a>SoC Fault Tolerance Research Project, Xi’an Jiaotong University</h3><blockquote>
+<p>  Participant 2019.04-Present</p>
 </blockquote>
 <ul>
-<li><p>Established and improved a brand-new checkpointing scheme "MsCp" for real-time embedded system which reduced checkpoint number from about 25 to 2~3 and total embedded system overheads by 20% compared to "TsCp" scheme</p></li>
-<li><p>Simulated the effects using MATLAB compared to other 2 checkpointing schemes and analyzed the results on software application average runtime, maximum of tolerant faults and CPU cost time to prove the superiority of "MsCp" scheme in harsh environment</p></li>
-<li><p>Drafted an English paper which proposed our achievement, discussed its effects and revised more than 30 times before submitting to a journal</p></li>
-<li><p>Chenhong TIAN, <strong>Fengrui TIAN</strong>, Xiaozhi DU, Checkpoint Optimization Approach with Application Multiple-state for Real-time Embedded System, <em>TEHNIČKI VJESNIK - TECHNICAL GAZETTE</em>, <strong>submitted (SCI, IF:0.644)</strong></p></li>
+<li><p>Established and improved a brand-new checkpointing scheme “MsCp” for real-time embedded system which reduced checkpoint number from about 25 to 2~3 and total embedded system overheads by 20% compared to “TsCp” scheme</p>
+</li>
+<li><p>Simulated the effects using MATLAB compared to other 2 checkpointing schemes and analyzed the results on software application average runtime, maximum of tolerant faults and CPU cost time to prove the superiority of “MsCp” scheme in harsh environment</p>
+</li>
+<li><p>Drafted an English paper which proposed our achievement, discussed its effects and revised more than 30 times before submitting to a journal</p>
+</li>
+<li><p>Chenhong TIAN, <strong>Fengrui TIAN</strong>, Xiaozhi DU, Checkpoint Optimization Approach with Application Multiple-state for Real-time Embedded System, <em>TEHNIČKI VJESNIK - TECHNICAL GAZETTE</em>, <strong>submitted (SCI, IF:0.644)</strong></p>
+</li>
 </ul>
-<h3 id="research-on-computer-vision-and-image-segmentation-xian-jiaotong-university">Research on Computer Vision and Image Segmentation, Xi’an Jiaotong University</h3>
-<blockquote>
-<p>Participant 2019.11-Present</p>
+<h3 id="Research-on-Computer-Vision-and-Image-Segmentation-Xi’an-Jiaotong-University"><a href="#Research-on-Computer-Vision-and-Image-Segmentation-Xi’an-Jiaotong-University" class="headerlink" title="Research on Computer Vision and Image Segmentation, Xi’an Jiaotong University"></a>Research on Computer Vision and Image Segmentation, Xi’an Jiaotong University</h3><blockquote>
+<p>  Participant 2019.11-Present</p>
 </blockquote>
 <ul>
-<li><p>Studied basic knowledge of Computer Vision, including: Convolution Neural Network, Graph Neural Network, Machine Learning Algorithm under the director of assistant professor Tian Zhiqiang</p></li>
-<li><p>Built an interactive segmentation application based on Analyzation of 2 CVPR papers about Object Annotation and end-to-end network</p></li>
+<li><p>Studied basic knowledge of Computer Vision, including: Convolution Neural Network, Graph Neural Network, Machine Learning Algorithm under the director of assistant professor Tian Zhiqiang</p>
+</li>
+<li><p>Built an interactive segmentation application based on Analyzation of 2 CVPR papers about Object Annotation and end-to-end network</p>
+</li>
 </ul>
-<h3 id="mining-communities-in-big-data-with-algorithms-national-university-of-singapore">Mining Communities in Big-Data with Algorithms, National University of Singapore</h3>
-<blockquote>
-<p>Team Leader 2019.07</p>
+<h3 id="Mining-Communities-in-Big-Data-with-Algorithms-National-University-of-Singapore"><a href="#Mining-Communities-in-Big-Data-with-Algorithms-National-University-of-Singapore" class="headerlink" title="Mining Communities in Big-Data with Algorithms, National University of Singapore"></a>Mining Communities in Big-Data with Algorithms, National University of Singapore</h3><blockquote>
+<p>  Team Leader 2019.07</p>
 </blockquote>
 <ul>
-<li><p>Organized other 3 group members to detect potential connections between movies and books with Douban user data using data mining algorithms such as Markov Chain, Minimum Spanning Tree, etc.</p></li>
-<li><p>Analyzed the relationship between 105 user groups and 8 different types of books and the relationship between 117 movies and different groups of users and then established the connection "books-users-movies" based on above 2 relationships</p></li>
-<li><p>Conducted more than 1,000 different kinds of books, more than 10 000 user information messages, and about 3 million movie comments on Douban Website using Python Web Crawler technology and cleaned the data after crawling to contract the data size from millions to tens of thousands</p></li>
-<li><p>Led the team to complete 3 PPTs, 3 project reports, 1 project website and more than 50 python code files</p></li>
-<li><p><a href="https://github.com/Yee172/Books2Movies" target="_blank" rel="noopener">Project in Github</a> <a href="https://yee172.github.io/Books2Movies/" target="_blank" rel="noopener">Project Home Page</a></p></li>
+<li><p>Organized other 3 group members to detect potential connections between movies and books with Douban user data using data mining algorithms such as Markov Chain, Minimum Spanning Tree, etc.</p>
+</li>
+<li><p>Analyzed the relationship between 105 user groups and 8 different types of books and the relationship between 117 movies and different groups of users and then established the connection “books-users-movies” based on above 2 relationships</p>
+</li>
+<li><p>Conducted more than 1,000 different kinds of books, more than 10 000 user information messages, and about 3 million movie comments on Douban Website using Python Web Crawler technology and cleaned the data after crawling to contract the data size from millions to tens of thousands</p>
+</li>
+<li><p>Led the team to complete 3 PPTs, 3 project reports, 1 project website and more than 50 python code files</p>
+</li>
+<li><p><a href="https://github.com/Yee172/Books2Movies" target="_blank" rel="noopener">Project in Github</a> <a href="https://yee172.github.io/Books2Movies/" target="_blank" rel="noopener">Project Home Page</a></p>
+</li>
 </ul>
-<h3 id="website-for-the-16th-china-model-united-nations-conference-xian-jiaotong-university">Website for the 16th China Model United Nations Conference, Xi’an Jiaotong University</h3>
-<blockquote>
-<p>Technical Director 2019.3-2019.10</p>
+<h3 id="Website-for-the-16th-China-Model-United-Nations-Conference-Xi’an-Jiaotong-University"><a href="#Website-for-the-16th-China-Model-United-Nations-Conference-Xi’an-Jiaotong-University" class="headerlink" title="Website for the 16th China Model United Nations Conference, Xi’an Jiaotong University"></a>Website for the 16th China Model United Nations Conference, Xi’an Jiaotong University</h3><blockquote>
+<p>  Technical Director 2019.3-2019.10</p>
 </blockquote>
 <ul>
-<li><p>Managed the team to build conference official website and conference news website which is used to glean personal information of nearly 800 conference delegates, observers and faculty advisors from about 150 universities, and publish up-to-date conference news</p></li>
-<li><p>Led team for daily website maintenance about half a year to ensure the normal running of 2 websites before, during and after the conference</p></li>
+<li><p>Managed the team to build conference official website and conference news website which is used to glean personal information of nearly 800 conference delegates, observers and faculty advisors from about 150 universities, and publish up-to-date conference news</p>
+</li>
+<li><p>Led team for daily website maintenance about half a year to ensure the normal running of 2 websites before, during and after the conference</p>
+</li>
 </ul>
-<h2 id="leadership-experience">Leadership Experience</h2>
-<h3 id="public-speaking-association-psa-xian-jiaotong-university">Public Speaking Association (PSA), Xi’an Jiaotong University</h3>
-<blockquote>
-<p>Vice Chairman 2017.11-Present</p>
+<h2 id="Leadership-Experience"><a href="#Leadership-Experience" class="headerlink" title="Leadership Experience"></a>Leadership Experience</h2><h3 id="Public-Speaking-Association-PSA-Xi’an-Jiaotong-University"><a href="#Public-Speaking-Association-PSA-Xi’an-Jiaotong-University" class="headerlink" title="Public Speaking Association (PSA), Xi’an Jiaotong University"></a>Public Speaking Association (PSA), Xi’an Jiaotong University</h3><blockquote>
+<p>  Vice Chairman 2017.11-Present</p>
 </blockquote>
 <ul>
-<li><p>Responsible for the recruitment, weekly training and activities of the PSA.</p></li>
-<li><p>Awarded in 3 MUN conferences and organized the 9th and 10th Xi'an Jiaotong University Model United Nations Conference. During the conference, responsible for more than 400 representatives and volunteers, 3 hours of dinner planning, etc.</p></li>
+<li><p>Responsible for the recruitment, weekly training and activities of the PSA.</p>
+</li>
+<li><p>Awarded in 3 MUN conferences and organized the 9th and 10th Xi’an Jiaotong University Model United Nations Conference. During the conference, responsible for more than 400 representatives and volunteers, 3 hours of dinner planning, etc.</p>
+</li>
 </ul>
-<h3 id="the-16th-china-model-united-nations-conference-xian-china">The 16th China Model United Nations Conference, Xi’an, China</h3>
-<blockquote>
-<p>Technical Director 2019.3-2019.10</p>
+<h3 id="The-16th-China-Model-United-Nations-Conference-Xi’an-China"><a href="#The-16th-China-Model-United-Nations-Conference-Xi’an-China" class="headerlink" title="The 16th China Model United Nations Conference, Xi’an, China"></a>The 16th China Model United Nations Conference, Xi’an, China</h3><blockquote>
+<p>  Technical Director 2019.3-2019.10</p>
 </blockquote>
 <ul>
-<li><p>Participated in planning of the whole meeting, whose budget is up to 800,000 Yuan. As the Technical Director responsible for coordinating department members to manage about 1000 participants’ information and conference information delivery from media department</p></li>
-<li><p>Managed the team to conduct about 2000-page conference documents, 2 video clips for opening and closing ceremony, about 15 posters and program arrangement in Social Event in the evening</p></li>
-<li><p>Organized nearly 300 volunteers who were divided into about 15 different groups during 4-days conference session to improve the quality of conference</p></li>
+<li><p>Participated in planning of the whole meeting, whose budget is up to 800,000 Yuan. As the Technical Director responsible for coordinating department members to manage about 1000 participants’ information and conference information delivery from media department</p>
+</li>
+<li><p>Managed the team to conduct about 2000-page conference documents, 2 video clips for opening and closing ceremony, about 15 posters and program arrangement in Social Event in the evening</p>
+</li>
+<li><p>Organized nearly 300 volunteers who were divided into about 15 different groups during 4-days conference session to improve the quality of conference</p>
+</li>
 </ul>
-<h2 id="skills-certificates-and-others">Skills, Certificates and Others</h2>
-<p>The Third Prize Scholarship in Xi’an Jiaotong University <em>2019.8</em></p>
+<h2 id="Skills-Certificates-and-Others"><a href="#Skills-Certificates-and-Others" class="headerlink" title="Skills, Certificates and Others"></a>Skills, Certificates and Others</h2><p>The Third Prize Scholarship in Xi’an Jiaotong University <em>2019.8</em></p>
 <p>Bronze medal in China College Computing Contest Group Programming Ladder Tournament <em>2018.9</em></p>
-<p>The Third Award for Mathematical Modeling in Xi'an Jiaotong University <em>2019.3</em></p>
-<p>Top 10 in speech contest during the military training in Xi'an Jiaotong University <em>2017.3</em></p>
+<p>The Third Award for Mathematical Modeling in Xi’an Jiaotong University <em>2019.3</em></p>
+<p>Top 10 in speech contest during the military training in Xi’an Jiaotong University <em>2017.3</em></p>
 <p>Volunteer experience in Chinese Association of Automation <em>2018.6-2019.6</em></p>
 
       
@@ -544,18 +544,13 @@ where
 
       
           <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
       
@@ -727,6 +722,63 @@ where
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
