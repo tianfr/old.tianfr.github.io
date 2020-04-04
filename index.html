@@ -176,7 +176,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-04 00:30:17" itemprop="dateModified" datetime="2020-04-04T00:30:17+08:00">2020-04-04</time>
+                <time title="Modified: 2020-04-04 09:35:01" itemprop="dateModified" datetime="2020-04-04T09:35:01+08:00">2020-04-04</time>
               </span>
 
           
@@ -190,7 +190,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Recently I have some misconception of Logistic Regression so I reviewed it and tried to do some mathematical derivations manually.</p>
+          <p>Recently I have some misconceptions of Logistic Regression so I reviewed it and tried to do some mathematical derivations manually.</p>
 <h1 id="Generally-Speaking"><a href="#Generally-Speaking" class="headerlink" title="Generally Speaking"></a>Generally Speaking</h1><p>In general, suppose we have $m$ examples and $n$ parameters in each example. The <strong>Cost Function</strong> of Logistic Regression is </p>
 <script type="math/tex; mode=display">
 J{(\theta)}=-\frac{1}{m}\sum_{i=1}^{m}log(h_{\theta}(x^{(i)})+(1-y^{(i)})log(1-h_\theta(x^{(i)}))</script><p>in which $x^{(i)}$represents the features of $i^{th}$ example, $y^{(i)}$ denotes the label of  $i^{th}$ example,</p>
@@ -289,9 +289,10 @@ h_\theta(x^{(i)})
 \end{matrix}
 
 \right]
-&=\frac{1}{m}\sum^m_{i=1}\big(h_\theta(x^{(i)}-y^{(i)})x^{(i)}\big)\tag{9}
-\end{align}</script><p>which </p>
+&=\frac{1}{m}\sum^m_{i=1}\Big(\big(h_\theta(x^{(i)})-y^{(i)}\big)x^{(i)}\Big)\tag{9}
+\end{align}</script><p>in which </p>
 <script type="math/tex; mode=display">
+\begin{aligned}
 x^{(i)}=
 \left[
 \begin{matrix}
@@ -301,7 +302,8 @@ x^{(i)}_2\\
 \vdots\\
 x^{(i)}_n\\
 \end{matrix}
-\right]</script><p>Finally using the above formula we have:</p>
+\right]
+\end{aligned}</script><p>Finally using the above formula we have:</p>
 <script type="math/tex; mode=display">
 \begin{align}
 \left[
@@ -334,11 +336,11 @@ x^{(i)}_n\\
 \\\\\\
 &h_\theta(x)-y = \left[
     \begin{matrix}
-        h_\theta(x^{(1)})-y\\
-        h_\theta(x^{(2)})-y\\
-        h_\theta(x^{(3)})-y\\
+        h_\theta(x^{(1)})-y^{(1)}\\
+        h_\theta(x^{(2)})-y^{(2)}\\
+        h_\theta(x^{(3)})-y^{(3)}\\
         \vdots\\
-        h_\theta(x^{(m)})-y\\
+        h_\theta(x^{(m)})-y^{(m)}\\
     \end{matrix}    
     \right]
 \end{aligned}</script><p>We could easily program Logistic Regression Derivatives using formula $(10)$.</p>
@@ -346,6 +348,8 @@ x^{(i)}_n\\
 <h1 id="Examples-in-MATLAB"><a href="#Examples-in-MATLAB" class="headerlink" title="Examples in MATLAB"></a>Examples in MATLAB</h1><p>In this part, I use MATLAB to program the Liner Regression Cost Function. In order to avoid overfitting, I do some regularization operations (L2 regularization) to improve the quality of parameters.</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[J, grad]</span> = <span class="title">lrCostFunction</span><span class="params">(theta, X, y, lambda)</span></span></span><br><span class="line"><span class="comment">%LRCOSTFUNCTION Compute cost and gradient for logistic regression with </span></span><br><span class="line"><span class="comment">%regularization</span></span><br><span class="line"><span class="comment">%   J = LRCOSTFUNCTION(theta, X, y, lambda) computes the cost of using</span></span><br><span class="line"><span class="comment">%   theta as the parameter for regularized logistic regression and the</span></span><br><span class="line"><span class="comment">%   gradient of the cost w.r.t. to the parameters. </span></span><br><span class="line"></span><br><span class="line"><span class="comment">% Initialize some useful values</span></span><br><span class="line">m = <span class="built_in">length</span>(y); <span class="comment">% number of training examples</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% You need to return the following variables correctly </span></span><br><span class="line">J = <span class="number">0</span>;</span><br><span class="line">grad = <span class="built_in">zeros</span>(<span class="built_in">size</span>(theta));</span><br><span class="line"></span><br><span class="line"><span class="comment">% =============================================================</span></span><br><span class="line">h_x = sigmoid(X*theta);</span><br><span class="line"></span><br><span class="line">grad = <span class="number">1</span>/m .*(X' * (h_x - y));</span><br><span class="line">temp = theta; </span><br><span class="line">temp(<span class="number">1</span>) = <span class="number">0</span>;   <span class="comment">% because we don't add anything for j = 0  </span></span><br><span class="line">J = <span class="number">1</span>/m*(sum(-y.*<span class="built_in">log</span>(h_x) - (<span class="number">1</span>-y) .* <span class="built_in">log</span>(<span class="number">1</span>-h_x))) + lambda/(<span class="number">2</span>*m) .* sum(temp.^<span class="number">2</span>);</span><br><span class="line">grad = grad + lambda ./ m .* temp;</span><br><span class="line"></span><br><span class="line"><span class="comment">% =============================================================</span></span><br><span class="line"></span><br><span class="line">grad = grad(:);</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">g</span> = <span class="title">sigmoid</span><span class="params">(z)</span></span></span><br><span class="line"><span class="comment">%SIGMOID Compute sigmoid functoon</span></span><br><span class="line"><span class="comment">%   J = SIGMOID(z) computes the sigmoid of z.</span></span><br><span class="line"></span><br><span class="line">g = <span class="number">1.0</span> ./ (<span class="number">1.0</span> + <span class="built_in">exp</span>(-z));</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><p>Andrew Ng, Machine Learning Course in Coursera: <a href="https://www.coursera.org/learn/machine-learning" target="_blank" rel="noopener">https://www.coursera.org/learn/machine-learning</a></p>
+<p>Neural Networks and Deep Learning: <a href="https://nndl.github.io/" target="_blank" rel="noopener">https://nndl.github.io/</a></p>
 
       
     </div>
