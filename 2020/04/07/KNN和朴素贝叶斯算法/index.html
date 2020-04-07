@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="朴素贝叶斯算法数学基础我们先举一个例子。投硬币是一个随机过程，我们不能预测任意一次投币结果是正面还是反面，我们只能谈论其下一次结果是正面或者反面的概率，如果容貌取得一些额外的数据，如硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况等，投币的准确结果是可以预测的。 因此，我们有如下定义：我们将不能获取的那些额外的数据称之为不可观测的变量(unobservable variable">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KNN和朴素贝叶斯算法">
+<meta property="og:url" content="http://yoursite.com/2020/04/07/KNN%E5%92%8C%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="CalmCat">
+<meta property="og:description" content="朴素贝叶斯算法数学基础我们先举一个例子。投硬币是一个随机过程，我们不能预测任意一次投币结果是正面还是反面，我们只能谈论其下一次结果是正面或者反面的概率，如果容貌取得一些额外的数据，如硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况等，投币的准确结果是可以预测的。 因此，我们有如下定义：我们将不能获取的那些额外的数据称之为不可观测的变量(unobservable variable">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-07T11:52:16.000Z">
+<meta property="article:modified_time" content="2020-04-07T12:00:45.808Z">
+<meta property="article:author" content="CalmCat">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/04/07/KNN%E5%92%8C%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>KNN和朴素贝叶斯算法 | CalmCat</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CalmCat</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about-me">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About Me</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/tianfr" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/07/KNN%E5%92%8C%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="CalmCat">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CalmCat">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          KNN和朴素贝叶斯算法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-04-07 19:52:16 / Modified: 20:00:45" itemprop="dateCreated datePublished" datetime="2020-04-07T19:52:16+08:00">2020-04-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="朴素贝叶斯算法"><a href="#朴素贝叶斯算法" class="headerlink" title="朴素贝叶斯算法"></a>朴素贝叶斯算法</h1><h2 id="数学基础"><a href="#数学基础" class="headerlink" title="数学基础"></a>数学基础</h2><p>我们先举一个例子。投硬币是一个随机过程，我们不能预测任意一次投币结果是正面还是反面，我们只能谈论其下一次结果是正面或者反面的概率，如果容貌取得一些额外的数据，如硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况等，投币的准确结果是可以预测的。</p>
+<p>因此，我们有如下定义：<br>我们将不能获取的那些额外的数据称之为<strong>不可观测的变量(unobservable variable)</strong>。在投币的例子中，唯一<strong>可观测的变量(observable variable)</strong> 是投币的结果。我们用$z$表示不可观测的变量，用$x$表示可观测的变量，事实上我们有</p>
+<script type="math/tex; mode=display">
+x = f\left( z \right)</script><p>其中$f\left( \cdot<br>\right)$是一个确定性函数，他定义不可观测数据的输出。因为我们不能用这种方式对该过程进行建模，所以我们定义输出$X$为指明该过程、由概率分布$P\left(<br>X = x \right)$抽取的随机变量。</p>
+<p>如果我们不知道$P\left( X<br>\right)$，并想从给定的样本估计，就需要统计学知识了。我们有一个样本$\chi$，包含由可观测变量$x^{i}$的概率分布（记为$p\left(<br>x \right)$）抽取出的样例，目的是使用样本$\chi$构造一个它的近似$\hat{p}\left(<br>x \right)$。<br>而朴素贝叶斯算法，便是求解该过程的一个算法。</p>
+<p>我们设可以观测的条件用伯努利随机变量$C$表示，根据上文，一个最简单的$C$的定义就是观测的结果。我们用$x$表示观测变量向量，$x$的一个简单的例子便是上文投掷硬币时硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况等等。则根据贝叶斯规则，我们有如下公式：</p>
+<script type="math/tex; mode=display">
+p\left( \left. C \right|x \right) = \frac{p\left( C \right)p\left( \left. x \right|C \right)}{p\left( x \right)}</script><p>如何理解这个公式？我们还拿掷硬币的例子来说。假设我们投掷了1000次硬币，我们利用某些手段精确的得到了这1000次掷硬币时每次硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况以及每次掷硬币的结果；当我们掷硬币第1001次时，在观测结果之前，我们已经得到这次掷硬币时硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况，那么我们如何预测这1001次掷硬币的结果？我们可以根据以往掷硬币的经验，判断在1001次掷硬币时，利用获得到的观测到的硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况这些因素值与之前投掷时其所有取值完全相同的所有的掷硬币的实验相比较，计算这些取值相同的实验中出现正面的次数和出现反面的次数的比例，而这个比例，便是这次掷硬币结果是正面和反面的概率。用公式表示，则为：</p>
+<script type="math/tex; mode=display">
+p(  第1001次掷硬币为正面 |\{精准成分,最初位置,\ldots \} = \left\{ a,b\ldots \right\} )= \frac{p(掷硬币为正面 )p(  精准成分= a, 最初位置= b\ldots | 掷硬币为正面)}{p(精准成分= a, 最初位置= b\ldots)}</script><p>如何求解<script type="math/tex">p\left( \left. 精准成分 = a, 最初位置 = b\ldots \right|掷硬币为正面 \right)</script>即<script type="math/tex">p\left( \left. x \right|C \right)</script>呢？我们一般假设每个可观测的条件都是独立的，即</p>
+<script type="math/tex; mode=display">
+p(精准成分 = a,最初位置 = b\ldots| 掷硬币为正面)=
+ p(精准成分 = a |掷硬币为正面) \times p(最初位置 = b|掷硬币为正面) \times \ldots</script><p>用数学符号表示即令$x = \left( x_{1},x_{2}\ldots \right)$，则</p>
+<script type="math/tex; mode=display">
+p\left( \left. x \right|C \right) = p\left( \left. x_{1} \right|C \right)p\left( \left. x_{2} \right|C \right)\ldots</script><p>而在实际求解问题中，对于分母$p\left( x \right)$我们一般不直接求它，而是根据</p>
+<script type="math/tex; mode=display">
+\sum_{i = 1}^{n}{p\left( \left. C_{i} \right|x \right) = 1}</script><p>即</p>
+<script type="math/tex; mode=display">
+\sum_{i = 1}^{n}{\frac{p\left( C_{i} \right)p\left( \left. x \right|C_{i} \right)}{p\left( x \right)} = 1}</script><p>求出所有可能结果带有$p\left( x<br>\right)$的式子，利用<strong>概率归一化原理</strong>得出每个$p\left( \left.C_{i} \right|x<br>\right)$的概率，并假设该次的结果为$max(p\left( \left. C_{i} \right|x<br>\right))$.</p>
+<p>理解了上述问题，下面的概念便不难理解了。</p>
+<p>我们将$p\left( C = K \right)$称之为$C$取值为$K$的<strong>先验概率（prior probability）</strong>，与$x$的取值无关。先验概率满足</p>
+<script type="math/tex; mode=display">
+\sum_{i = 1}^{n}{p\left( C = K \right) = 1}</script><p>我们将$p\left( \left. x \right|C \right)$称之为<strong>类似然（class likelihood）</strong>,是属于$C$的时间具有相关联的观测值$x$的条件概率。<br>$p\left( x<br>\right)$是<strong>证据（evidence）</strong>，是看到观测$x$的边缘概率，不论它是正实例还是负实例。由<strong>全概率公式</strong>，我们有：</p>
+<script type="math/tex; mode=display">
+\sum_{i = 1}^{n}{p\left( \left. x \right|C = i \right)p\left( C = i \right)}</script><p>使用贝叶斯规则，组合先验知识和数据告诉我们的，在看到观测$x$之后，计算概念的<strong>后验概率（posterior probability）</strong>$p\left( \left. C \right|x \right)$。</p>
+<script type="math/tex; mode=display">
+后验=(先验×似然值)/证据</script><h2 id="连续值的处理"><a href="#连续值的处理" class="headerlink" title="连续值的处理"></a>连续值的处理</h2><p>如果特征是连续值，处理连续值的一种常用技术是使用分级来离散特征值，以获得一组新的伯努利分布特征；</p>
+<p>另一种方法：假设$p$具有高斯（正态）分布，则估计$p\left( X_{j}|C = c_{i}<br>\right)$:</p>
+<script type="math/tex; mode=display">
+p\left( X_{j}|C = c_{i} \right) = \frac{1}{\sqrt{2\pi}\sigma_{\text{ji}}}\exp\left( - \frac{\left( X_{j} - \mu_{\text{ji}} \right)^{2}}{2\sigma_{\text{ji}}^{2}} \right)</script><p>其中，</p>
+<p>$\mu_{\text{ji}}$指$C = c_{i}$的示例的特征值$X_{j}$的平均值；</p>
+<p>$\sigma_{\text{ji}}^{2}$指$C = c_{i}$的示例的特征值$X_{j}$的方差。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p><strong>朴素贝叶斯是一个简单但重要的概率模型。</strong></p>
+<p>朴素贝叶斯是一种简单的多类分类算法，它基于贝叶斯定理应用特征之间的“朴素”独立假设。它假设自变量的条件概率在统计上是独立的。</p>
+<p>它计算给定标签的每个特征的条件概率分布，然后应用贝叶斯定理计算给定观察的标签的条件概率分布将其用于预测。</p>
+<p>它根据新数据属于某个最高概率的特定类别对其进行分类。</p>
+<p>但其也有如下<strong>缺点</strong>：</p>
+<ul>
+<li><p>需要计算先验概率；</p>
+</li>
+<li><p>分类决策存在错误率；</p>
+</li>
+<li><p>对输入数据的表达形式很敏感；</p>
+</li>
+<li><p>由于使用了样本属性独立性的假设，如果样本属性之间有关联时其预测效果不好。</p>
+</li>
+</ul>
+<h1 id="KNN算法"><a href="#KNN算法" class="headerlink" title="KNN算法"></a>KNN算法</h1><h2 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h2><p><strong><em>定义</em></strong> 给定一个数据库$D=\{x_{1},x_{2},x_{3},…,x_{n}\}$和一组类$C = \{ C_{1},…,C_{n}\}$假定每个元组包括一些数值型的属性值$x_i =\{ x_{i1},x_{i2},x_{i3},…,x_{in}\}$，每个类也包含数值型属性值$C_{j} = \{ C_{j1},…,C_{jn}\}$，则分类问题是要分配每个$x_{i}$到满足如下条件的类$C_{j}$:</p>
+<p>对$\forall C_{l} \in C$且$C_{l} \neq C_{j}$，有：</p>
+<script type="math/tex; mode=display">
+sim\left( x_{i},C_{j} \right) \geq sim\left( x_{i},C_{l} \right)</script><p>其中$s{im}\left(x_{i},C_{j} \right)$被称为相似性，在实际的计算中往往用距离来表征。距离越近，相似性越大，距离越远，相似性越小。距离的计算方法有很多种：</p>
+<p>设有向量：$a = \left( a_{1},a_{2},a_{3},\ldots,a_{n} \right),\ b = (b_{1},b_{2},b_{3},\ldots,b_{n})$则:</p>
+<p><strong>欧几里得距离（Euclidean Distance）</strong>： </p>
+<p><strong>曼哈坦距离（Manhattan Distance）：</strong></p>
+<script type="math/tex; mode=display">
+d(a,b) = \left| a_{1} - b_{1} \right| + \left| a_{2} - b_{2} \right| + \ldots + |a_{n} - b_{n}|</script><p>欧式距离和曼哈坦距离 <strong><em>共同点</em></strong>：</p>
+<ul>
+<li>距离为一个非负数值；</li>
+<li>自身距离为0；</li>
+<li>距离函数具有对称性；</li>
+<li>距离函数满足三角不等式。</li>
+</ul>
+<p><strong>明考斯基距离（Minkowski Distance）</strong> 为欧几里得距离和曼哈坦距离的概化：</p>
+<script type="math/tex; mode=display">
+d( a,b) = {(( a_{1} - b_{1})^{p} + ( a_{2} - b_{2} )^{p} + \ldots, + ( a_{n} - b_{n} )^{p})}^{\frac{1}{p}},p \geq 1</script><p>其中$p$为一个正整数，当$p = 1$时，其表示曼哈坦距离，$p = 2$时，其表示欧几里得距离.</p>
+<p><strong><em>加权的明考斯基距离</em></strong>：如果对每一个变量根据其重要性赋予一个权重，就得到加权的明考斯基距离。</p>
+<h2 id="KNN分类直观思想"><a href="#KNN分类直观思想" class="headerlink" title="KNN分类直观思想"></a>KNN分类直观思想</h2><p><strong>如果它走路像鸭子，叫声也像鸭子，那么他可能就是只鸭子。</strong></p>
+<h2 id="KNN算法基本步骤"><a href="#KNN算法基本步骤" class="headerlink" title="KNN算法基本步骤"></a>KNN算法基本步骤</h2><ul>
+<li>计算已知类别数据集中每个点与当前点的距离；</li>
+<li>选取与当前点距离最小的k个点；</li>
+<li>统计前K个点中每个类别的样本出现的概率；</li>
+<li>返回前K个点出现频率最高的类别作为当前点的预测分类。</li>
+</ul>
+<h2 id="KNN算法常见问题"><a href="#KNN算法常见问题" class="headerlink" title="KNN算法常见问题"></a>KNN算法常见问题</h2><h3 id="类别如何判定"><a href="#类别如何判定" class="headerlink" title="类别如何判定"></a>类别如何判定</h3><p>投票法：没有考虑近邻的距离的远近，距离更近的近邻也许更应该决定最终的方案</p>
+<p>改进方法：加权投票法。</p>
+<h3 id="如何选区合适的距离测量"><a href="#如何选区合适的距离测量" class="headerlink" title="如何选区合适的距离测量"></a>如何选区合适的距离测量</h3><p>高纬度对距离衡量的影响：变量数越多，欧式距离的区分能力就越差；</p>
+<p>变量值域对距离的影响：值域大的变量常常会在距离计算中占据主导作用，<strong><em>因此应先对变量进行标准化。</em></strong></p>
+<h3 id="训练样本是否要一视同仁"><a href="#训练样本是否要一视同仁" class="headerlink" title="训练样本是否要一视同仁"></a>训练样本是否要一视同仁</h3><p>可以给不同的样本加不同的权重，加强依赖样本的权重，降低不可信赖样本的影响</p>
+<h3 id="性能问题"><a href="#性能问题" class="headerlink" title="性能问题"></a>性能问题</h3><ul>
+<li>KNN是一种 <em><strong>懒惰算法(收到测试样本后才开始训练)</strong></em></li>
+<li>对测试样本分类是，需要扫描全部训练样本并计算距离</li>
+<li>压缩训练样本量可以提高计算效率</li>
+</ul>
+<h3 id="优化方法"><a href="#优化方法" class="headerlink" title="优化方法"></a>优化方法</h3><p>特征降维：基于 Fuzzy ART 的 K- 最近邻分类改进算法,该算法用模糊自适应共振理论(Fuzzy ART)对K-最近邻的训练样本集进行浓缩, 以改善K- 最近邻的计算速度（对样本 的 维度进行简化，提取出特征明显的维度进行计算）；</p>
+<p>模式聚合： CHI 概率统计方法进行初步特征提取和模式聚合（如果某一维在各个类别中取值基本相同, 那么此维 对 于文本分类的贡献率就相对较低）；</p>
+<p>引入CLA(Classiﬁer’s Local Accuracy)技术进行分类可信度分析。</p>
+<h2 id="KNN小结"><a href="#KNN小结" class="headerlink" title="KNN小结"></a>KNN小结</h2><p>KNN算法本身简单有效，它是一种<strong>lazy-learning</strong>算法；</p>
+<p>分类器不需要使用训练集进行训练， 训练时间复杂度为0；</p>
+<p>KNN分类的计算复杂度和训练集中的文档 数目成正比，也就是说，如果训练集中文档总数为n,那么KNN的分类时间复杂度为O(n)。</p>
+<p>KNN不足：</p>
+<ul>
+<li>KNN是由k值的选择驱动的，这可能是一个糟糕的选择；</li>
+<li>通常，较大的k值会降低噪声对分类的影响，但会使类之间的边界不那么明显；</li>
+<li>由于存在噪声、不相关的特征或者特征尺度与其重要性不一致，算法的准确性会严重降低；</li>
+<li>检查解决方案对不同k值的敏感性是非常重要的</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Machine-Learning/" rel="tag"><i class="fa fa-tag"></i> Machine Learning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/07/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%80%E4%BB%8B/" rel="prev" title="决策树简介">
+      <i class="fa fa-chevron-left"></i> 决策树简介
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#朴素贝叶斯算法"><span class="nav-number">1.</span> <span class="nav-text">朴素贝叶斯算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数学基础"><span class="nav-number">1.1.</span> <span class="nav-text">数学基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连续值的处理"><span class="nav-number">1.2.</span> <span class="nav-text">连续值的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">1.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#KNN算法"><span class="nav-number">2.</span> <span class="nav-text">KNN算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法描述"><span class="nav-number">2.1.</span> <span class="nav-text">算法描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KNN分类直观思想"><span class="nav-number">2.2.</span> <span class="nav-text">KNN分类直观思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KNN算法基本步骤"><span class="nav-number">2.3.</span> <span class="nav-text">KNN算法基本步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KNN算法常见问题"><span class="nav-number">2.4.</span> <span class="nav-text">KNN算法常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类别如何判定"><span class="nav-number">2.4.1.</span> <span class="nav-text">类别如何判定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何选区合适的距离测量"><span class="nav-number">2.4.2.</span> <span class="nav-text">如何选区合适的距离测量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练样本是否要一视同仁"><span class="nav-number">2.4.3.</span> <span class="nav-text">训练样本是否要一视同仁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能问题"><span class="nav-number">2.4.4.</span> <span class="nav-text">性能问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化方法"><span class="nav-number">2.4.5.</span> <span class="nav-text">优化方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KNN小结"><span class="nav-number">2.5.</span> <span class="nav-text">KNN小结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="CalmCat"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">CalmCat</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tianfr" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tianfr" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:tianfr@outlook.com" title="E-Mail → mailto:tianfr@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_25297587" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_25297587" rel="noopener" target="_blank"><i class=" fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CalmCat</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+</body>
+</html>
