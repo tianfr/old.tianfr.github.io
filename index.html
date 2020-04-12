@@ -159,377 +159,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/07/KNN%E5%92%8C%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="CalmCat">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CalmCat">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/07/KNN%E5%92%8C%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">KNN和朴素贝叶斯算法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-04-07 19:52:16 / Modified: 20:00:45" itemprop="dateCreated datePublished" datetime="2020-04-07T19:52:16+08:00">2020-04-07</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="朴素贝叶斯算法"><a href="#朴素贝叶斯算法" class="headerlink" title="朴素贝叶斯算法"></a>朴素贝叶斯算法</h1><h2 id="数学基础"><a href="#数学基础" class="headerlink" title="数学基础"></a>数学基础</h2><p>我们先举一个例子。投硬币是一个随机过程，我们不能预测任意一次投币结果是正面还是反面，我们只能谈论其下一次结果是正面或者反面的概率，如果容貌取得一些额外的数据，如硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况等，投币的准确结果是可以预测的。</p>
-<p>因此，我们有如下定义：<br>我们将不能获取的那些额外的数据称之为<strong>不可观测的变量(unobservable variable)</strong>。在投币的例子中，唯一<strong>可观测的变量(observable variable)</strong> 是投币的结果。我们用$z$表示不可观测的变量，用$x$表示可观测的变量，事实上我们有</p>
-<script type="math/tex; mode=display">
-x = f\left( z \right)</script><p>其中$f\left( \cdot<br>\right)$是一个确定性函数，他定义不可观测数据的输出。因为我们不能用这种方式对该过程进行建模，所以我们定义输出$X$为指明该过程、由概率分布$P\left(<br>X = x \right)$抽取的随机变量。</p>
-<p>如果我们不知道$P\left( X<br>\right)$，并想从给定的样本估计，就需要统计学知识了。我们有一个样本$\chi$，包含由可观测变量$x^{i}$的概率分布（记为$p\left(<br>x \right)$）抽取出的样例，目的是使用样本$\chi$构造一个它的近似$\hat{p}\left(<br>x \right)$。<br>而朴素贝叶斯算法，便是求解该过程的一个算法。</p>
-<p>我们设可以观测的条件用伯努利随机变量$C$表示，根据上文，一个最简单的$C$的定义就是观测的结果。我们用$x$表示观测变量向量，$x$的一个简单的例子便是上文投掷硬币时硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况等等。则根据贝叶斯规则，我们有如下公式：</p>
-<script type="math/tex; mode=display">
-p\left( \left. C \right|x \right) = \frac{p\left( C \right)p\left( \left. x \right|C \right)}{p\left( x \right)}</script><p>如何理解这个公式？我们还拿掷硬币的例子来说。假设我们投掷了1000次硬币，我们利用某些手段精确的得到了这1000次掷硬币时每次硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况以及每次掷硬币的结果；当我们掷硬币第1001次时，在观测结果之前，我们已经得到这次掷硬币时硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况，那么我们如何预测这1001次掷硬币的结果？我们可以根据以往掷硬币的经验，判断在1001次掷硬币时，利用获得到的观测到的硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况这些因素值与之前投掷时其所有取值完全相同的所有的掷硬币的实验相比较，计算这些取值相同的实验中出现正面的次数和出现反面的次数的比例，而这个比例，便是这次掷硬币结果是正面和反面的概率。用公式表示，则为：</p>
-<script type="math/tex; mode=display">
-p(  第1001次掷硬币为正面 |\{精准成分,最初位置,\ldots \} = \left\{ a,b\ldots \right\} )= \frac{p(掷硬币为正面 )p(  精准成分= a, 最初位置= b\ldots | 掷硬币为正面)}{p(精准成分= a, 最初位置= b\ldots)}</script><p>如何求解<script type="math/tex">p\left( \left. 精准成分 = a, 最初位置 = b\ldots \right|掷硬币为正面 \right)</script>即<script type="math/tex">p\left( \left. x \right|C \right)</script>呢？我们一般假设每个可观测的条件都是独立的，即</p>
-<script type="math/tex; mode=display">
-p(精准成分 = a,最初位置 = b\ldots| 掷硬币为正面)=
- p(精准成分 = a |掷硬币为正面) \times p(最初位置 = b|掷硬币为正面) \times \ldots</script><p>用数学符号表示即令$x = \left( x_{1},x_{2}\ldots \right)$，则</p>
-<script type="math/tex; mode=display">
-p\left( \left. x \right|C \right) = p\left( \left. x_{1} \right|C \right)p\left( \left. x_{2} \right|C \right)\ldots</script><p>而在实际求解问题中，对于分母$p\left( x \right)$我们一般不直接求它，而是根据</p>
-<script type="math/tex; mode=display">
-\sum_{i = 1}^{n}{p\left( \left. C_{i} \right|x \right) = 1}</script><p>即</p>
-<script type="math/tex; mode=display">
-\sum_{i = 1}^{n}{\frac{p\left( C_{i} \right)p\left( \left. x \right|C_{i} \right)}{p\left( x \right)} = 1}</script><p>求出所有可能结果带有$p\left( x<br>\right)$的式子，利用<strong>概率归一化原理</strong>得出每个$p\left( \left.C_{i} \right|x<br>\right)$的概率，并假设该次的结果为$max(p\left( \left. C_{i} \right|x<br>\right))$.</p>
-<p>理解了上述问题，下面的概念便不难理解了。</p>
-<p>我们将$p\left( C = K \right)$称之为$C$取值为$K$的<strong>先验概率（prior probability）</strong>，与$x$的取值无关。先验概率满足</p>
-<script type="math/tex; mode=display">
-\sum_{i = 1}^{n}{p\left( C = K \right) = 1}</script><p>我们将$p\left( \left. x \right|C \right)$称之为<strong>类似然（class likelihood）</strong>,是属于$C$的时间具有相关联的观测值$x$的条件概率。<br>$p\left( x<br>\right)$是<strong>证据（evidence）</strong>，是看到观测$x$的边缘概率，不论它是正实例还是负实例。由<strong>全概率公式</strong>，我们有：</p>
-<script type="math/tex; mode=display">
-\sum_{i = 1}^{n}{p\left( \left. x \right|C = i \right)p\left( C = i \right)}</script><p>使用贝叶斯规则，组合先验知识和数据告诉我们的，在看到观测$x$之后，计算概念的<strong>后验概率（posterior probability）</strong>$p\left( \left. C \right|x \right)$。</p>
-<script type="math/tex; mode=display">
-后验=(先验×似然值)/证据</script><h2 id="连续值的处理"><a href="#连续值的处理" class="headerlink" title="连续值的处理"></a>连续值的处理</h2><p>如果特征是连续值，处理连续值的一种常用技术是使用分级来离散特征值，以获得一组新的伯努利分布特征；</p>
-<p>另一种方法：假设$p$具有高斯（正态）分布，则估计$p\left( X_{j}|C = c_{i}<br>\right)$:</p>
-<script type="math/tex; mode=display">
-p\left( X_{j}|C = c_{i} \right) = \frac{1}{\sqrt{2\pi}\sigma_{\text{ji}}}\exp\left( - \frac{\left( X_{j} - \mu_{\text{ji}} \right)^{2}}{2\sigma_{\text{ji}}^{2}} \right)</script><p>其中，</p>
-<p>$\mu_{\text{ji}}$指$C = c_{i}$的示例的特征值$X_{j}$的平均值；</p>
-<p>$\sigma_{\text{ji}}^{2}$指$C = c_{i}$的示例的特征值$X_{j}$的方差。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p><strong>朴素贝叶斯是一个简单但重要的概率模型。</strong></p>
-<p>朴素贝叶斯是一种简单的多类分类算法，它基于贝叶斯定理应用特征之间的“朴素”独立假设。它假设自变量的条件概率在统计上是独立的。</p>
-<p>它计算给定标签的每个特征的条件概率分布，然后应用贝叶斯定理计算给定观察的标签的条件概率分布将其用于预测。</p>
-<p>它根据新数据属于某个最高概率的特定类别对其进行分类。</p>
-<p>但其也有如下<strong>缺点</strong>：</p>
-<ul>
-<li><p>需要计算先验概率；</p>
-</li>
-<li><p>分类决策存在错误率；</p>
-</li>
-<li><p>对输入数据的表达形式很敏感；</p>
-</li>
-<li><p>由于使用了样本属性独立性的假设，如果样本属性之间有关联时其预测效果不好。</p>
-</li>
-</ul>
-<h1 id="KNN算法"><a href="#KNN算法" class="headerlink" title="KNN算法"></a>KNN算法</h1><h2 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h2><p><strong><em>定义</em></strong> 给定一个数据库$D=\{x_{1},x_{2},x_{3},…,x_{n}\}$和一组类$C = \{ C_{1},…,C_{n}\}$假定每个元组包括一些数值型的属性值$x_i =\{ x_{i1},x_{i2},x_{i3},…,x_{in}\}$，每个类也包含数值型属性值$C_{j} = \{ C_{j1},…,C_{jn}\}$，则分类问题是要分配每个$x_{i}$到满足如下条件的类$C_{j}$:</p>
-<p>对$\forall C_{l} \in C$且$C_{l} \neq C_{j}$，有：</p>
-<script type="math/tex; mode=display">
-sim\left( x_{i},C_{j} \right) \geq sim\left( x_{i},C_{l} \right)</script><p>其中$s{im}\left(x_{i},C_{j} \right)$被称为相似性，在实际的计算中往往用距离来表征。距离越近，相似性越大，距离越远，相似性越小。距离的计算方法有很多种：</p>
-<p>设有向量：$a = \left( a_{1},a_{2},a_{3},\ldots,a_{n} \right),\ b = (b_{1},b_{2},b_{3},\ldots,b_{n})$则:</p>
-<p><strong>欧几里得距离（Euclidean Distance）</strong>： </p>
-<p><strong>曼哈坦距离（Manhattan Distance）：</strong></p>
-<script type="math/tex; mode=display">
-d(a,b) = \left| a_{1} - b_{1} \right| + \left| a_{2} - b_{2} \right| + \ldots + |a_{n} - b_{n}|</script><p>欧式距离和曼哈坦距离 <strong><em>共同点</em></strong>：</p>
-<ul>
-<li>距离为一个非负数值；</li>
-<li>自身距离为0；</li>
-<li>距离函数具有对称性；</li>
-<li>距离函数满足三角不等式。</li>
-</ul>
-<p><strong>明考斯基距离（Minkowski Distance）</strong> 为欧几里得距离和曼哈坦距离的概化：</p>
-<script type="math/tex; mode=display">
-d( a,b) = {(( a_{1} - b_{1})^{p} + ( a_{2} - b_{2} )^{p} + \ldots, + ( a_{n} - b_{n} )^{p})}^{\frac{1}{p}},p \geq 1</script><p>其中$p$为一个正整数，当$p = 1$时，其表示曼哈坦距离，$p = 2$时，其表示欧几里得距离.</p>
-<p><strong><em>加权的明考斯基距离</em></strong>：如果对每一个变量根据其重要性赋予一个权重，就得到加权的明考斯基距离。</p>
-<h2 id="KNN分类直观思想"><a href="#KNN分类直观思想" class="headerlink" title="KNN分类直观思想"></a>KNN分类直观思想</h2><p><strong>如果它走路像鸭子，叫声也像鸭子，那么他可能就是只鸭子。</strong></p>
-<h2 id="KNN算法基本步骤"><a href="#KNN算法基本步骤" class="headerlink" title="KNN算法基本步骤"></a>KNN算法基本步骤</h2><ul>
-<li>计算已知类别数据集中每个点与当前点的距离；</li>
-<li>选取与当前点距离最小的k个点；</li>
-<li>统计前K个点中每个类别的样本出现的概率；</li>
-<li>返回前K个点出现频率最高的类别作为当前点的预测分类。</li>
-</ul>
-<h2 id="KNN算法常见问题"><a href="#KNN算法常见问题" class="headerlink" title="KNN算法常见问题"></a>KNN算法常见问题</h2><h3 id="类别如何判定"><a href="#类别如何判定" class="headerlink" title="类别如何判定"></a>类别如何判定</h3><p>投票法：没有考虑近邻的距离的远近，距离更近的近邻也许更应该决定最终的方案</p>
-<p>改进方法：加权投票法。</p>
-<h3 id="如何选区合适的距离测量"><a href="#如何选区合适的距离测量" class="headerlink" title="如何选区合适的距离测量"></a>如何选区合适的距离测量</h3><p>高纬度对距离衡量的影响：变量数越多，欧式距离的区分能力就越差；</p>
-<p>变量值域对距离的影响：值域大的变量常常会在距离计算中占据主导作用，<strong><em>因此应先对变量进行标准化。</em></strong></p>
-<h3 id="训练样本是否要一视同仁"><a href="#训练样本是否要一视同仁" class="headerlink" title="训练样本是否要一视同仁"></a>训练样本是否要一视同仁</h3><p>可以给不同的样本加不同的权重，加强依赖样本的权重，降低不可信赖样本的影响</p>
-<h3 id="性能问题"><a href="#性能问题" class="headerlink" title="性能问题"></a>性能问题</h3><ul>
-<li>KNN是一种 <em><strong>懒惰算法(收到测试样本后才开始训练)</strong></em></li>
-<li>对测试样本分类是，需要扫描全部训练样本并计算距离</li>
-<li>压缩训练样本量可以提高计算效率</li>
-</ul>
-<h3 id="优化方法"><a href="#优化方法" class="headerlink" title="优化方法"></a>优化方法</h3><p>特征降维：基于 Fuzzy ART 的 K- 最近邻分类改进算法,该算法用模糊自适应共振理论(Fuzzy ART)对K-最近邻的训练样本集进行浓缩, 以改善K- 最近邻的计算速度（对样本 的 维度进行简化，提取出特征明显的维度进行计算）；</p>
-<p>模式聚合： CHI 概率统计方法进行初步特征提取和模式聚合（如果某一维在各个类别中取值基本相同, 那么此维 对 于文本分类的贡献率就相对较低）；</p>
-<p>引入CLA(Classiﬁer’s Local Accuracy)技术进行分类可信度分析。</p>
-<h2 id="KNN小结"><a href="#KNN小结" class="headerlink" title="KNN小结"></a>KNN小结</h2><p>KNN算法本身简单有效，它是一种<strong>lazy-learning</strong>算法；</p>
-<p>分类器不需要使用训练集进行训练， 训练时间复杂度为0；</p>
-<p>KNN分类的计算复杂度和训练集中的文档 数目成正比，也就是说，如果训练集中文档总数为n,那么KNN的分类时间复杂度为O(n)。</p>
-<p>KNN不足：</p>
-<ul>
-<li>KNN是由k值的选择驱动的，这可能是一个糟糕的选择；</li>
-<li>通常，较大的k值会降低噪声对分类的影响，但会使类之间的边界不那么明显；</li>
-<li>由于存在噪声、不相关的特征或者特征尺度与其重要性不一致，算法的准确性会严重降低；</li>
-<li>检查解决方案对不同k值的敏感性是非常重要的</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/07/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%80%E4%BB%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="CalmCat">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CalmCat">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/07/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">决策树简介</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-04-07 19:52:16 / Modified: 19:36:40" itemprop="dateCreated datePublished" datetime="2020-04-07T19:52:16+08:00">2020-04-07</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="决策树简介"><a href="#决策树简介" class="headerlink" title="决策树简介"></a>决策树简介</h1><p>决策树是一种实现分支策略的层次数据结构。他是一种有效的<strong>非参数学习方法</strong>，可以用于分类和回归。</p>
-<h2 id="非参数学习方法与参数学习方法"><a href="#非参数学习方法与参数学习方法" class="headerlink" title="非参数学习方法与参数学习方法"></a>非参数学习方法与参数学习方法</h2><p>参数学习方法：在训练完成所有数据后得到一系列训练参数，然后根据训练参数来预测新样本的值，这时不再依赖之前的训练数据了，参数值是确定的。</p>
-<p>而非参数学习方法是：在预测新样本值时候每次都会重新训练数据得到新的参数值，也就是说每次预测新样本都会依赖训练数据集合，所以每次得到的参数值是不确定的。例如局部加权回归（LWR）就是非参数学习方法。</p>
-<p>决策树有二元分支树和多分枝树，一般采用二元分裂。</p>
-<p>决策树技术核心是<strong>递归分割的贪婪算法。</strong></p>
-<h2 id="决策树要解决的问题"><a href="#决策树要解决的问题" class="headerlink" title="决策树要解决的问题"></a>决策树要解决的问题</h2><ol>
-<li><p>收集待分类的数据，这些数据所有属性应该是完全标注的；</p>
-</li>
-<li><p>设计分类原则，即数据的哪些属性可以被用来分类，以及如何将该属性量化；</p>
-</li>
-<li><p>分类原则的选择，即在众多分类准则中，每一步应使用哪一准则最终树更令人满意。</p>
-</li>
-<li><p>设计分类停止条件，实际应用中数据的属性很多，真正有分类意义的属性往往有限，因此在必要的时候应<strong>停止数据集分裂</strong>：</p>
-<ol>
-<li><p>该节点包含的数据太少不足以分裂；</p>
-</li>
-<li><p>继续分裂数据集对树生成的目标没有贡献；</p>
-</li>
-<li><p>树的深度过大不宜再分；</p>
-</li>
-</ol>
-</li>
-</ol>
-<h1 id="ID3算法"><a href="#ID3算法" class="headerlink" title="ID3算法"></a>ID3算法</h1><h2 id="ID3算法核心"><a href="#ID3算法核心" class="headerlink" title="ID3算法核心"></a>ID3算法核心</h2><p>ID3算法核心是在决策树各级节点上选择属性时，通过计算信息增益来选择属性，以使得每一非叶节点进行测试时，能获得关于被测试记录最大的类别信息。</p>
-<h2 id="具体方法"><a href="#具体方法" class="headerlink" title="具体方法"></a>具体方法</h2><p>检测所有的属性，选择信息增益最大的属性产生的决策树节点，游该属性的不同取值建立分支，再对各分支的子集递归调用该方法建立决策树节点的分支，直到所有子集仅包含同一类别的数据为止。</p>
-<p>在分支节点处属性的选择上，ID3算法使用信息论中的信息增益作为标准，通过计算分支节点处每个属性的信息增益，选择具有最高信息增益（信息熵减少的程度最大）的属性作为当前节点的分支属性，这样保证了对训练样本子集进行分类时所需要信息最小，从而确保所产生的决策树最为简单。</p>
-<h2 id="信息论基本概念"><a href="#信息论基本概念" class="headerlink" title="信息论基本概念"></a>信息论基本概念</h2><p><strong>定义1</strong><br>若存在$n$个相同概率的消息，则每个消息的概率$p$是$\frac{1}{n}$，一个消息传递的信息量是$\operatorname{}n$；</p>
-<p><strong>定义2</strong> 若有$n$个消息，其给定概率分布$P = \left(p_{1},p_{2},p_{3},\ldots,p_{n}\right)$，则由该分布传递的信息量称为$P$的熵，记为</p>
-<script type="math/tex; mode=display">
-I\left( p \right) = - \sum_{i = 1}^{n}{p_{\mathbb{i}}\operatorname{log_2}p_{i}}</script><h3 id="信息熵"><a href="#信息熵" class="headerlink" title="信息熵"></a>信息熵</h3><p>信息熵是消除不确定性所需信息量的度量，即位置时间可能含有的信息量。具体计算方法见<strong>定义2。</strong></p>
-<p><strong>熵可以作为数据出精度或胡乱度的衡量指标：</strong></p>
-<ul>
-<li><p>当数据变得越来越纯时，熵的值变得越来越小；</p>
-</li>
-<li><p>信息中正反所占比例相同时，熵取最大值；</p>
-</li>
-<li><p>信息中所有数据都只属于一个类时，熵得到最小值。</p>
-</li>
-</ul>
-<p><strong>定义3</strong> 若一个记录集合$T$根据类别属性的值被分成相互独立的类$C_{1},C_{2},C_{3},\ldots\,C_{k}$，则识别$T$的一个元素所属哪个类所需要的信息量为</p>
-<script type="math/tex; mode=display">
-\text{Info}\left( T\right) = I\left( P \right)</script><p>，其中$P$为$C_{1},\ C_{2},C_{3},\ldots\,C_{k}$的概率分布，即</p>
-<script type="math/tex; mode=display">
-P = \left( \frac{\left| C_{1} \right|}{\left| T \right|},\ldots,\frac{\left| C_{k} \right|}{\left| T \right|} \right)</script><p><strong>定义4</strong><br>信息增益度是两个信息量之间的差值，其中一个信息量是确定$T$中衣服元素的信息量，另一个信息量是在已得到属性$X$的值后确定$T$中的一个元素的信息量。信息增益度公式为：</p>
-<script type="math/tex; mode=display">
-\text{Gain}\left( X,T \right) = Info\left( T \right) - Info(X,T)</script><h3 id="信息增益"><a href="#信息增益" class="headerlink" title="信息增益"></a>信息增益</h3><p>信息增益可以衡量划分数据集前后数据（标签）有序性发展的程度。其计算公式见<strong>定义4</strong>。</p>
-<h2 id="ID3算法评价"><a href="#ID3算法评价" class="headerlink" title="ID3算法评价"></a>ID3算法评价</h2><p><strong>优点</strong>：</p>
-<p>分类过程和领域知识无关，几乎所有模式和场景都可以得到结果；</p>
-<p><strong>缺点</strong>：</p>
-<ul>
-<li><p>ID3算法注意力集中在特征的选择上，且偏向于选择特征值数目较多的特征，而特征值数目较多的特征缺不总是最优特征；</p>
-</li>
-<li><p><strong>ID3算法用户信息作为特征选择量上存在一个假设，即训练例子集中的正、反例的比例应该与实际问题领域中的正反例的比例相同。但在一般情况下，都不能保证二者相同，这样计算训练集的信息增益便存在偏差；</strong></p>
-</li>
-<li><p>不适用于连续变量；</p>
-</li>
-<li><p>只能用于分类；</p>
-</li>
-<li><p>一次只用一类特征值进行划分，特征间相关性强调不够；</p>
-</li>
-<li><p>样本量较小时，可能会导致过度分类；</p>
-</li>
-<li><p>对样本数据缺失的情况无法处理；</p>
-</li>
-<li><p>不适合处理包含多重分支的特征值；</p>
-</li>
-</ul>
-<p>ID3算法适用于数量较大的决策树判断系统和大型的数据库系统。在这些系统中，其优势会得到更好体现。ID3算法引入后不久，Schlimmer和Fisher在ID3算法的基础熵构造了ID4算法，允许递增式构造决策树，1988年，Utgoff提出ID5算法，允许通过修改决策树来增加新的训练实例，而无需重建决策树。</p>
-<h1 id="ID3算法改进-C4-5"><a href="#ID3算法改进-C4-5" class="headerlink" title="ID3算法改进-C4.5"></a>ID3算法改进-C4.5</h1><h2 id="改进之处"><a href="#改进之处" class="headerlink" title="改进之处"></a>改进之处</h2><ol>
-<li><p>用<strong>信息增益率(详见下文定义5)</strong>来选择属性，克服了用信息增益选择属性时偏向选择取值较多的这一不足；</p>
-</li>
-<li><p>在决策树构造过程中进行剪枝；</p>
-</li>
-<li><p>能够完成对连续属性的离散化处理；</p>
-</li>
-<li><p>能够对不完整数据进行处理。</p>
-</li>
-</ol>
-<p><strong>定义5</strong><br>设样本集$T$按离散属性$A$的$s$个不同取值划分为$T_{1},T_{2},\ldots,T_{s}$，共$s$个子集，则用属性$A$对样本集$T$进行划分的信息增益率为$\text{ratio}\left(<br>A,T \right) = Gain(A,T)/split(A,T)$。其中</p>
-<script type="math/tex; mode=display">
-\text{split}\left( A,T \right) = - \sum_{i = 1}^{s}\frac{\left| T_{i} \right|}{\left| T \right|} \times \operatorname{log_2}\left( \frac{\left| T_{i} \right|}{\left| T \right|} \right)</script><h2 id="连续值属性与分裂点处理"><a href="#连续值属性与分裂点处理" class="headerlink" title="连续值属性与分裂点处理"></a>连续值属性与分裂点处理</h2><ol>
-<li><p>将需要处理的样本（对应根节点）或样本子集（对应子树）按照连续变量的大小从小到大进行排序；</p>
-</li>
-<li><p>取每对相邻值的中点作为可能的分裂点split_point；</p>
-</li>
-<li><p>用信息增益比率选择最佳划分。</p>
-</li>
-</ol>
-<p>假设一连续属性公有N个不同的属性值，则可以找到N-1个可能的分裂点。检查每个可能的分裂点，取能使得信息增益最大的分裂点，将D分裂成$D1：A&lt;= Split Point $和 $D2：A &gt; SplitPoint$</p>
-<p><strong>当离散属性和连续属性并存时，C4.5算法倾向于选择连续特征做最佳分裂点。</strong></p>
-<h2 id="缺失值的处理"><a href="#缺失值的处理" class="headerlink" title="缺失值的处理"></a>缺失值的处理</h2><p>简单方法：赋予它该属性最常见的值</p>
-<p><strong>复杂策略：为A的每一个可能值赋予一个概率，则改进如下：</strong></p>
-<script type="math/tex; mode=display">
-\text{Gain}^{'}\left( A,T \right) = F \times Gain(A,T)</script><p>其中F为属性值未缺失的实例所占比例，计算$Gain(A,T)$时忽略属性值缺失的实例。</p>
-<p>分裂时，将属性缺失的实例分配给所有分支，并带一个权重。</p>
-<h2 id="过拟合与剪枝"><a href="#过拟合与剪枝" class="headerlink" title="过拟合与剪枝"></a>过拟合与剪枝</h2><h3 id="过拟合"><a href="#过拟合" class="headerlink" title="过拟合"></a>过拟合</h3><p>上述的决策树算法增长树的每一个分支的深度，直到恰好能对训练样例比较完美的分类。</p>
-<p>实际应用中，当训练样本中有噪声或训练样例的数量太少以至于不能产生目标函数的有代表性采样时，该策略可能遇到困难。</p>
-<p>以上情况发生时，这个简单算法产生的树会过度拟合训练样例（Over fitting）。</p>
-<p><strong>产生原因</strong>：训练样本中有噪声，训练样例太小，缺乏代表性样本等。</p>
-<h3 id="剪枝"><a href="#剪枝" class="headerlink" title="剪枝"></a>剪枝</h3><h4 id="预剪枝（pre-pruning）"><a href="#预剪枝（pre-pruning）" class="headerlink" title="预剪枝（pre-pruning）"></a>预剪枝（pre-pruning）</h4><p>在完全正确分类训练集之前就停止树的生长。</p>
-<p>所有决策树的构建方法，都是在无法进一步降低熵的情况下才会停止创建分支的过程。为了避免过拟合，可以设定一个阈值，熵减小的数量小于这个阈值，即使可以继续降低熵，也停止继续创建分支。</p>
-<p>本方法由于实际效果不好，生成的决策树分支较少，一般不采用。</p>
-<h4 id="后减枝（post-pruning）"><a href="#后减枝（post-pruning）" class="headerlink" title="后减枝（post-pruning）"></a>后减枝（post-pruning）</h4><p>由“完全生长”的树减去子树。</p>
-<p>在测试集上定义损失函数C，目标时通过剪枝使得在测试集上C的值下降。</p>
-<p>自底向上遍历每一个非叶节点（除根节点），将当前的非叶节点从树中剪去，旗下所有的叶节点合并成一个节点，代替原来被剪掉的叶节点；</p>
-<p>计算剪去节点前后的损失函数，如果剪去节点值后损失函数变小了，则说明该节点可以减去，并将其减去，如果发现损失函数并没有减少，说明该节点不可减去，则将树还原成未减去的状态。</p>
-<p>重复上述过程，直到所有的非叶节点（除了根节点）都被尝试。</p>
-<p>方法：</p>
-<p>Reduced-Error Pruning(REP)</p>
-<p>Peaimistic-Error Pruning(PEP)</p>
-<p>Cost-Complexity Pruning(CCP)</p>
-<p>Error-Based Pruning(EBP)</p>
-<h2 id="C4-5评价"><a href="#C4-5评价" class="headerlink" title="C4.5评价"></a>C4.5评价</h2><p><strong>优点</strong></p>
-<ul>
-<li><p>通过信息增益率选择分裂属性，客服了ID3算法中通过信息增益倾向于选择拥有多个属性值的属性作为分裂属性的不足；</p>
-</li>
-<li><p>可以将连续性属性进行离散化处理，克服ID3算法不能处理连续性数据缺陷，C4.5算法能够处理离散型和连续性变量两种属性类型；</p>
-</li>
-<li><p>构造决策树后采用后减枝操作，解决ID3算法中可能出现过拟合问题；</p>
-</li>
-<li><p>可训练具有缺失属性值的训练属性；</p>
-</li>
-<li><p>产生的分类规则易于理解且准确率高；</p>
-</li>
-</ul>
-<p><strong>缺点</strong></p>
-<ul>
-<li><p>构造树的过程中，需要对数据集进行多次顺序扫描和排序，因而导致算法的低效</p>
-</li>
-<li><p>针对含有连续属性的训练样本时，算法计算效率较低；</p>
-</li>
-<li><p>算法在选择分类属性时没有考虑到条件属性间的相关性，只计算数据集中的每一条件属性与决策属性之间的期望信息，有可能影响到属性选择的正确定；</p>
-</li>
-<li><p>算法只适合于能够驻留与内存的数据集，当训练集大得无法在内存容纳时程序无法运行。</p>
-</li>
-</ul>
-<h1 id="CART算法"><a href="#CART算法" class="headerlink" title="CART算法"></a>CART算法</h1><h2 id="算法特点"><a href="#算法特点" class="headerlink" title="算法特点"></a>算法特点</h2><p>分类回归树（CART：Classification and Regression Tree）可以处理高度倾斜或多态的数值型数据，也可处理顺序或无序的类属性数据。CART算法选择具有最小的gini(下见<strong>定义6</strong>)系数值的属性作为测试属性，gini值越小，样本的“纯净度”越高，划分效果最好。</p>
-<p><strong>定义6</strong> 设样本$T$中包含$n$个不同类别，则</p>
-<script type="math/tex; mode=display">
-\text{gini}\left( T \right) = 1 - \sum_{j = 1}^{n}p_{j}^{2}</script><p>其中$p_{j}$是$T$中包含$j$值的频率（用频率等价于概率）。若将$T$划分为两个子集$T_{1}$和$T_{2}$，则</p>
-<script type="math/tex; mode=display">
-\text{gini}\left( T_{1},T_{2} \right) = \frac{\left| T_{1} \right|}{\left| T \right|}\text{gini}\left( T_{1} \right) + \frac{\left| T_{2} \right|}{\left| T \right|}gini(T_{2})</script><p>与C4.5算法类似，CART算法也是先建树后减枝，但在具体实现上有所不同。由于二叉树不易产生数据碎片，精确度往往高于多叉树，因此CART算法采用二分递归划分，在分支节点上进行布尔测试，判断条件为真的划归左分支，否则划归右分支，最终形成一个二叉决策树。</p>
-<p>CART算法在满足下述条件之一时停止建树：</p>
-<p>所有叶节点中的样本数为1或样本属于同一类；</p>
-<p>决策树高度到达用户设置的阈值。</p>
-<p>CART算法在剪枝阶段，采用<strong>代价-复杂性剪枝算法</strong>。当决策树复杂度超过一定程度后，随着复杂度的提高，测试集的分类精确度反而降低。</p>
-<h2 id="CCP（代价复杂度剪枝）"><a href="#CCP（代价复杂度剪枝）" class="headerlink" title="CCP（代价复杂度剪枝）"></a>CCP（代价复杂度剪枝）</h2><p>CCP选择节点表面误差率增益值（下见<strong>定义7</strong>）最小的非叶子节点，删除该非叶子节点的左右子节点，若有多个非叶子节点的表面误差率增益值相同小，则选择非叶子节点中子节点数量最多的非叶子节点进行剪枝。</p>
-<p><strong>定义7</strong> 设样本集为$T$共有$m$个取值划分，$R\left( t<br>\right)$表示叶子节点的误差代价，$R\left( t \right) = r\left( t \right) \times<br>p(t)$，其中$r(t)$为节点的错误率，$p(t)$为节点数据量的占比；$R(T)$表示子树的误差代价:</p>
-<script type="math/tex; mode=display">
-R\left( T \right) = \sum_{i = 1}^{m}{r_{i}(t) \times p_{i}(t)}</script><p>其中$r_{i}(t)$为子节点$i$的错误率，$p_{i}(t)$为节点$i$的数据节点占比；$N(T)$表示子树节点个数，则表面误差率增益值$\alpha$：</p>
-<script type="math/tex; mode=display">
-\alpha = \frac{R\left( t \right) - R(T)}{N\left( T \right) - 1}</script><h1 id="决策树总结"><a href="#决策树总结" class="headerlink" title="决策树总结"></a>决策树总结</h1><p>决策树技术发现数据模式和规则的核心是<strong>归纳算法</strong>。</p>
-<p><strong>决策树不足</strong></p>
-<p>决策树算法非常容易过拟合，导致<strong>泛化能力不强</strong>。可以通过设置节点最少样本数量和限制决策树深度来改进。</p>
-<p>决策树会因为<strong>样本发生一点点的改动，就会导致树结构的剧烈改变</strong>。可以通过集成学习之类的方法解决。</p>
-<p><strong>寻找最优的决策树是一个NP难的问题</strong>，我们一般是通过启发式方法，<strong>容易陷入局部最优</strong>。可以通过集成学习之类的方法来改善。</p>
-<p><strong>有些比较复杂的关系，决策树很难学习，比如异或</strong>。这个就没有办法了，一般这种关系可以换神经网络分类方法来解决。</p>
-<p><strong>如果某些特征的样本比例过大，生成决策树容易偏向于这些特征</strong>。这个可以通过调节样本权重来改善。</p>
-<h1 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h1><p>评价指标在这里不做过多讨论，但其却是一个很重要的问题。具体请详见<strong>混淆矩阵和ROC曲线。</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/06/Mathmatic-Process-of-Back-Propagation-Derivates-in-Neural-Network/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -548,6 +177,12 @@ R\left( T \right) = \sum_{i = 1}^{m}{r_{i}(t) \times p_{i}(t)}</script><p>其中
         </h2>
 
         <div class="post-meta">
+          
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color=7D26CD>Top</font>
+            <span class="post-meta-divider">|</span>
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
@@ -561,7 +196,7 @@ R\left( T \right) = \sum_{i = 1}^{m}{r_{i}(t) \times p_{i}(t)}</script><p>其中
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-08 12:45:30" itemprop="dateModified" datetime="2020-04-08T12:45:30+08:00">2020-04-08</time>
+                <time title="Modified: 2020-04-12 13:46:42" itemprop="dateModified" datetime="2020-04-12T13:46:42+08:00">2020-04-12</time>
               </span>
 
           
@@ -587,77 +222,14 @@ J(w,b; x,y)=\frac{1}{2}||h_{w,b}(x)-y||^2\tag{1}</script><p>We use the <strong><
 <script type="math/tex; mode=display">
 J(w,b)=[\sum^{m}_{i=1}J(w,b;x^{(i)},y^{(i)})]+\frac{\lambda}{2}\sum_{l=2}^{n_l}\sum_{i=1}^{S_{l-1}}\sum_{j=1}^{S_l}(w^{(l)}_{ji})^2\tag{2}</script><p>The second term to the right of the equation$\frac{\lambda}{2}\sum_{l=2}^{n_l}\sum_{i=1}^{S_{l-1}}\sum_{j=1}^{S_l}(w^{(l)}_{ji})$ actually is a additional term in order to avoiding “overfitting problem”, and its derivatives of any parameters is simple. So in the following section let’s just ignore it.<br>The target we want to solve is the $\frac{\partial{J(w,b)}}{\partial w^{(l)}_{ji}}$ and  $\frac{\partial{J(w,b)}}{\partial b^{(l)}_{i}}$ for optimizing those parameters by some method (like Gradient Descent). It is actually pretty hard to calculate the  $\frac{\partial{J(w,b)}}{\partial w^{(l)}_{ji}}$ and  $\frac{\partial{J(w,b)}}{\partial b^{(l)}_{i}}$ in direct since we will do a huge work of matrix derivatives. so Let’s concentrate on a easier way. </p>
 <h1 id="Error-Term-delta"><a href="#Error-Term-delta" class="headerlink" title="Error Term $\delta$"></a>Error Term $\delta$</h1><p>According to the “Neural Network and Deep Learning”, based on the <strong>chain derivation rule</strong>, formula$(6)(7)$ is defined:</p>
-<script type="math/tex; mode=display">
-\frac{\partial{J(w,b)}}{\partial w^{(l)}_{ji}} =  \frac{\partial{J(w,b)}}{\partial z^{(l+1)}_{j}}\frac{\partial z^{(l+1)}_{j}}{\partial w^{(l)}_{ji}}\tag{3}</script><script type="math/tex; mode=display">
-\frac{\partial{J(w,b)}}{\partial b^{(l)}_{j}} =  \frac{\partial{J(w,b)}}{\partial z^{(l+1)}_{j}}\frac{\partial z^{(l+1)}_{j}}{\partial b^{(l)}_{j}}\tag{4}</script><p>We can use an <strong>Error Term</strong> $\delta$ to calculate the above partial derivation more easily:</p>
-<script type="math/tex; mode=display">
-\delta^{(l)}_{j}=\frac{\partial{J(w,b)}}{\partial z^{(l+1)}_{j}}\tag{5}</script><p>in which,</p>
-<script type="math/tex; mode=display">
-z^{(l)}=w^{(l)}a^{(l-1)}+b^{(l)}</script><script type="math/tex; mode=display">
-a^{(l)}=f(z^{(l)})</script><p>Here we define the function $f$ as the <strong>Activate Function</strong> (such as sigmoid, tanh, etc.)</p>
-<p>To calculate $\delta$, we could start from the output layer to the input layer step by step.</p>
-<h1 id="Calculation-of-Output-Layer-delta-n-l-i"><a href="#Calculation-of-Output-Layer-delta-n-l-i" class="headerlink" title="Calculation of Output Layer $\delta^{(n_l)}_i$"></a>Calculation of Output Layer $\delta^{(n_l)}_i$</h1><p>Calculating the output layer $\delta^{(n_l)}_i$ is relative easily:</p>
-<script type="math/tex; mode=display">
-\delta^{(n_l)}_i=-(y_i-a_i^{(n_l)})f'(z_i^{(n_l)})\tag{6}</script><h2 id="Proof"><a href="#Proof" class="headerlink" title="Proof"></a>Proof</h2><p>In the proof, we denote the Training Set is $(x,y)$.</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-\delta^{(n_l)}_i&=\frac{\partial}{\partial z^{(n_l)}_i}J(w,b)
-\\
-&=\frac{\partial}{\partial z^{(n_l)}_i}J(w,b;x,y)
-\\
-
-\\
-&=\frac{\partial}{\partial z^{(n_l)}_i}\frac{1}{2}||y-h_{w,b}(x)||^2
-\\
-&=\frac{\partial}{\partial z^{(n_l)}_i}\frac{1}{2}\sum_{j=1}^{S_{n_l}}\big(y_j-f(z_j^{(n_l)})\big)^2
-\\
-&=-(y_i-f(z_j^{(n_l)}))f'(z_j^{(n_l)})
-\\
-&=-(y_i-a_i^{(n_l)})f'(z^{(n_l)}_i)
-\end{aligned}</script><h1 id="Calculation-of-n-l-1-Layers-delta-n-l-i"><a href="#Calculation-of-n-l-1-Layers-delta-n-l-i" class="headerlink" title="Calculation of $n_l-1$ Layers  $\delta^{(n_{l})}_{i}$"></a>Calculation of $n_l-1$ Layers  $\delta^{(n_{l})}_{i}$</h1><p>For $l\in\{n_l-1, n_l-2, …, 2\}$ (we cannot let $l=1$ since the parameters $w$ between the input layer and the second layer is define as the $w^{(2)}$ and there is no $w^{(1)}$ parameter) the $\delta$ can be set as:</p>
-<script type="math/tex; mode=display">
-\delta_i^{(l)}=\Big(\sum_{j=1}^{S_{l+1}}w_{ji}^{(l+1)}\delta_j^{(l+1)}\Big)f'(z_i^{(l)})\tag{7}</script><p>To proof that, we could proof the $\delta_i^{(n_l-1)}$ in the $n_l-1$ layer first:</p>
-<script type="math/tex; mode=display">
-\delta_i^{(n_l-1)}=\Big(\sum_{j=1}^{S_{n_l}}w_{ji}^{(n_l)}\delta_j^{(n_l)}\Big)f'(z_i^{(l)})\tag{8}</script><h2 id="Proof-1"><a href="#Proof-1" class="headerlink" title="Proof"></a>Proof</h2><script type="math/tex; mode=display">
-\begin{align*}
-\delta_i^{(n_l-1)}&=\frac{\partial}{\partial z_i^{(n_l-1)}}J(w,b)
-\\
-&=\frac{\partial}{\partial z^{(n_l-1)}_i}J(w,b;x,y)
-\\
-&=\frac{\partial}{\partial z^{(n_l-1)}_i}\frac{1}{2}||h_{w,b}(x)-y||^2
-\\
-&=\frac{\partial}{\partial z^{(n_l-1)}_i}\sum_{j=1}^{S_{n_l}}\frac{1}{2}(f(z_j^{(n_l)})-y_j)^2
-\\
-&=\sum_{j=1}^{S_{n_l}}-(y_j-f(z_j^{(n_l)}))\frac{\partial f(z_j^{(n_l)})}{\partial z^{(n_l-1)}_i}
-\\
-&=\sum_{j=1}^{S_{n_l}}-(y_j-f(z_j^{(n_l)}))f'(z_j^{(n_l)})\frac{\partial z_j^{(n_l)}}{\partial z^{(n_l-1)}_i}
-\\
-&=\sum_{j=1}^{S_{n_l}}\delta^{(n_l)}_j\frac{\partial z_j^{(n_l)}}{\partial z^{(n_l-1)}_i}
-\\
-&=\sum_{j=1}^{S_{n_l}}\delta^{(n_l)}_j\frac{\partial \Big[\Big(\sum_{k=1}^{S_{n_l-1}}f(z_k^{(n_l-1)})w_{jk}^{(n_l)}\Big)+b^{(n_l)}\Big]}{\partial z^{(n_l-1)}_i}
-\\
-&=\sum_{j=1}^{S_{n_l}}\delta^{(n_l)}_j\frac{\partial \Big[\sum_{k=1}^{S_{n_l-1}}f(z_k^{(n_l-1)})w_{jk}^{(n_l)}\Big]}{\partial z^{(n_l-1)}_i}
-\\
-&=\sum_{j=1}^{S_{n_l}}\delta^{(n_l)}_j\frac{\partial \Big[f(z_i^{(n_l-1)})w_{ji}^{(n_l)}\Big]}{\partial z^{(n_l-1)}_i}
-\\
-&=\sum_{j=1}^{S_{n_l}}\delta^{(n_l)}_jw_{ji}^{(n_l)}\frac{\partial f(z_i^{(n_l-1)})}{\partial z^{(n_l-1)}_i}
-\\
-&=\sum_{j=1}^{S_{n_l}}\delta^{(n_l)}_jw_{ji}^{(n_l)}f'(z_i^{(n_l-1)})
-\\
-&=\Big(\sum_{j=1}^{S_{n_l}}\delta^{(n_l)}_jw_{ji}^{(n_l)}\Big)f'(z_i^{(n_l-1)})
-\end{align*}</script><p>Based on above mathematical process, we could conclude the formula$(9)$:</p>
-<script type="math/tex; mode=display">
-\delta_i^{(n_l-1)}=\Big(\sum_{j=1}^{S_{n_l}}\delta^{(n_l)}_jw_{ji}^{(n_l)}\Big)f'(z_i^{(n_l-1)})\tag{9}</script><h1 id="Calculation-of-Other-Layers-delta-l-i"><a href="#Calculation-of-Other-Layers-delta-l-i" class="headerlink" title="Calculation of Other Layers  $\delta^{(l)}_{i}$"></a>Calculation of Other Layers  $\delta^{(l)}_{i}$</h1><p>Using formula$(9)$, we change the $n_l-1$ to any layer $l$:</p>
-<script type="math/tex; mode=display">
-\delta_i^{(l)}=\Big(\sum_{j=1}^{S_l}\delta^{(l+1)}_jw_{ji}^{(l+1)}\Big)f'(z_i^{(l)})\tag{10}</script><h1 id="Calculation-of-derivatives-w-l-ji-b-l"><a href="#Calculation-of-derivatives-w-l-ji-b-l" class="headerlink" title="Calculation of derivatives $w^{(l)}_{ji}, b^{(l)}$"></a>Calculation of derivatives $w^{(l)}_{ji}, b^{(l)}$</h1><p>According to formula$(3)(4)$, we need to calculate the $\frac{\partial z^{(l+1)}_{j}}{\partial w^{(l)}_{ji}}$ and $\frac{\partial z^{(l+1)}_{j}}{\partial b^{(l)}_{j}}$:</p>
-<script type="math/tex; mode=display">
-\frac{\partial z^{(l+1)}_{j}}{\partial w^{(l)}_{ji}}=\frac{\partial \Big(\sum_{k=1}^{S_{n_l-1}}a_k^{(l)}w_{jk}^{(l+1)}+b^{(l)}\Big)}{\partial w^{(l)}_{ji}}=a_i\tag{11}</script><script type="math/tex; mode=display">
-\frac{\partial z^{(l+1)}_{j}}{\partial b^{(l)}}=\frac{\partial \Big(\sum_{k=1}^{S_{n_l-1}}a_k^{(l)}w_{jk}^{(l+1)}+b^{(l)}\Big)}{\partial b^{(l)}}=1\tag{12}</script><p>Using formula$(10)(11)$, we could solve  $\frac{\partial{J(w,b)}}{\partial w^{(l)}_{ji}}$ and  $\frac{\partial{J(w,b)}}{\partial b^{(l)}_{j}}$ :</p>
-<script type="math/tex; mode=display">
-\frac{\partial{J(w,b)}}{\partial w^{(l)}_{ji}} =  \frac{\partial{J(w,b)}}{\partial z^{(l+1)}_{j}}\frac{\partial z^{(l+1)}_{j}}{\partial w^{(l)}_{ji}}=\delta_j^{(l+1)}a_i\tag{13}</script><script type="math/tex; mode=display">
-\frac{\partial{J(w,b)}}{\partial b^{(l)}_{j}} =  \frac{\partial{J(w,b)}}{\partial z^{(l+1)}_{j}}\frac{\partial z^{(l+1)}_{j}}{\partial b^{(l)}_{j}}=\delta_j^{(l+1)}\cdot1\tag{14}</script><h1 id="Simulation-on-MATALB"><a href="#Simulation-on-MATALB" class="headerlink" title="Simulation on MATALB"></a>Simulation on MATALB</h1><p>I simulate the Back Propagation Algorithm on MATLAB, which have $10$ neurons in output layer, $400$ neurons in input layer, and 25 neurons in the only hidden layer. I use the MNIST handwritten digit dataset to train my neural network, and use <strong>Regularization Method</strong> to calculate partial derivatives and use <strong>Gradient Checking</strong> to ensure the correctness. </p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[J grad]</span> = <span class="title">nnCostFunction</span><span class="params">(nn_params, ...</span></span></span><br><span class="line"><span class="function"><span class="params">                                   input_layer_size, ...</span></span></span><br><span class="line"><span class="function"><span class="params">                                   hidden_layer_size, ...</span></span></span><br><span class="line"><span class="function"><span class="params">                                   num_labels, ...</span></span></span><br><span class="line"><span class="function"><span class="params">                                   X, y, lambda)</span></span></span><br><span class="line"><span class="comment">%NNCOSTFUNCTION Implements the neural network cost function for a two layer</span></span><br><span class="line"><span class="comment">%neural network which performs classification</span></span><br><span class="line"><span class="comment">%   [J grad] = NNCOSTFUNCTON(nn_params, hidden_layer_size, num_labels, ...</span></span><br><span class="line"><span class="comment">%   X, y, lambda) computes the cost and gradient of the neural network. The</span></span><br><span class="line"><span class="comment">%   parameters for the neural network are "unrolled" into the vector</span></span><br><span class="line"><span class="comment">%   nn_params and need to be converted back into the weight matrices. </span></span><br><span class="line"><span class="comment">% </span></span><br><span class="line"><span class="comment">%   The returned parameter grad should be a "unrolled" vector of the</span></span><br><span class="line"><span class="comment">%   partial derivatives of the neural network.</span></span><br><span class="line"><span class="comment">%</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% Reshape nn_params back into the parameters Theta1 and Theta2, the weight matrices</span></span><br><span class="line"><span class="comment">% for our 2 layer neural network</span></span><br><span class="line">Theta1 = <span class="built_in">reshape</span>(nn_params(<span class="number">1</span>:hidden_layer_size * (input_layer_size + <span class="number">1</span>)), ...</span><br><span class="line">                 hidden_layer_size, (input_layer_size + <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">Theta2 = <span class="built_in">reshape</span>(nn_params((<span class="number">1</span> + (hidden_layer_size * (input_layer_size + <span class="number">1</span>))):<span class="keyword">end</span>), ...</span><br><span class="line">                 num_labels, (hidden_layer_size + <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">% Setup some useful variables</span></span><br><span class="line">m = <span class="built_in">size</span>(X, <span class="number">1</span>);</span><br><span class="line">         </span><br><span class="line"><span class="comment">% You need to return the following variables correctly </span></span><br><span class="line">J = <span class="number">0</span>;</span><br><span class="line">Theta1_grad = <span class="built_in">zeros</span>(<span class="built_in">size</span>(Theta1));</span><br><span class="line">Theta2_grad = <span class="built_in">zeros</span>(<span class="built_in">size</span>(Theta2));</span><br><span class="line"></span><br><span class="line"><span class="comment">% ====================== YOUR CODE HERE ======================</span></span><br><span class="line"><span class="comment">% Instructions: You should complete the code by working through the</span></span><br><span class="line"><span class="comment">%               following parts.</span></span><br><span class="line"><span class="comment">%</span></span><br><span class="line"><span class="comment">% Part 1: Feedforward the neural network and return the cost in the</span></span><br><span class="line"><span class="comment">%         variable J. After implementing Part 1, you can verify that your</span></span><br><span class="line"><span class="comment">%         cost function computation is correct by verifying the cost</span></span><br><span class="line"><span class="comment">%         computed in ex4.m</span></span><br><span class="line"><span class="comment">%</span></span><br><span class="line"><span class="comment">% Part 2: Implement the backpropagation algorithm to compute the gradients</span></span><br><span class="line"><span class="comment">%         Theta1_grad and Theta2_grad. You should return the partial derivatives of</span></span><br><span class="line"><span class="comment">%         the cost function with respect to Theta1 and Theta2 in Theta1_grad and</span></span><br><span class="line"><span class="comment">%         Theta2_grad, respectively. After implementing Part 2, you can check</span></span><br><span class="line"><span class="comment">%         that your implementation is correct by running checkNNGradients</span></span><br><span class="line"><span class="comment">%</span></span><br><span class="line"><span class="comment">%         Note: The vector y passed into the function is a vector of labels</span></span><br><span class="line"><span class="comment">%               containing values from 1..K. You need to map this vector into a </span></span><br><span class="line"><span class="comment">%               binary vector of 1's and 0's to be used with the neural network</span></span><br><span class="line"><span class="comment">%               cost function.</span></span><br><span class="line"><span class="comment">%</span></span><br><span class="line"><span class="comment">%         Hint: We recommend implementing backpropagation using a for-loop</span></span><br><span class="line"><span class="comment">%               over the training examples if you are implementing it for the </span></span><br><span class="line"><span class="comment">%               first time.</span></span><br><span class="line"><span class="comment">%</span></span><br><span class="line"><span class="comment">% Part 3: Implement regularization with the cost function and gradients.</span></span><br><span class="line"><span class="comment">%</span></span><br><span class="line"><span class="comment">%         Hint: You can implement this around the code for</span></span><br><span class="line"><span class="comment">%               backpropagation. That is, you can compute the gradients for</span></span><br><span class="line"><span class="comment">%               the regularization separately and then add them to Theta1_grad</span></span><br><span class="line"><span class="comment">%               and Theta2_grad from Part 2.</span></span><br><span class="line"><span class="comment">%</span></span><br><span class="line"></span><br><span class="line">ones_size = <span class="built_in">size</span>(X, <span class="number">1</span>);</span><br><span class="line">ones_input = <span class="built_in">ones</span>(ones_size,<span class="number">1</span>);</span><br><span class="line">X = [ones_input X];</span><br><span class="line"></span><br><span class="line">inner_layer = sigmoid(Theta1 * X');</span><br><span class="line">ones_inner = <span class="built_in">ones</span>(<span class="number">1</span>,m);</span><br><span class="line">inner_layer = [ones_inner; inner_layer];</span><br><span class="line"></span><br><span class="line">output_layer = sigmoid(Theta2 * inner_layer);</span><br><span class="line">output_layer = output_layer';</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k = <span class="number">1</span>:num_labels</span><br><span class="line">    y_matrix = (k==y);</span><br><span class="line">    x_matrix = output_layer(:,k);</span><br><span class="line">    cost = <span class="number">1</span>/m * sum(-y_matrix .* <span class="built_in">log</span>(x_matrix) - (<span class="number">1</span>-y_matrix) .* <span class="built_in">log</span>(<span class="number">1</span>-x_matrix));</span><br><span class="line">    J = J + cost;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">reg_Theta1 = Theta1(:,<span class="number">2</span>:<span class="built_in">size</span>(Theta1,<span class="number">2</span>));</span><br><span class="line">reg_Theta2 = Theta2(:,<span class="number">2</span>:<span class="built_in">size</span>(Theta2,<span class="number">2</span>));</span><br><span class="line">regularization = lambda/(<span class="number">2</span>*m)*(sum(sum(reg_Theta1.^<span class="number">2</span>)) + sum(sum(reg_Theta2.^<span class="number">2</span>)));</span><br><span class="line">J = J + regularization;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:m</span><br><span class="line">    a_1 = X(<span class="built_in">i</span>,:);</span><br><span class="line"></span><br><span class="line"><span class="comment">%     size(a_1)</span></span><br><span class="line">    z_2 = a_1 * Theta1';</span><br><span class="line">    a_2 = [<span class="number">1</span> sigmoid(z_2)];</span><br><span class="line"></span><br><span class="line">    z_3 = a_2 * Theta2';</span><br><span class="line">    a_3 = sigmoid(z_3);</span><br><span class="line"></span><br><span class="line">    y_3 = <span class="built_in">zeros</span>(<span class="number">1</span>,num_labels);</span><br><span class="line">    y_3(y(<span class="built_in">i</span>)) = <span class="number">1</span>;</span><br><span class="line">    delta_3 = a_3 - y_3;</span><br><span class="line">    delta_3 = delta_3';</span><br><span class="line"><span class="comment">%     size(delta_3)</span></span><br><span class="line"></span><br><span class="line">    delta_2 = Theta2' * delta_3;</span><br><span class="line"><span class="comment">%     size(delta_2)</span></span><br><span class="line"><span class="comment">%     size(z_2)</span></span><br><span class="line">    delta_2 = delta_2(<span class="number">2</span>:<span class="keyword">end</span>) .* sigmoidGradient(z_2');</span><br><span class="line"><span class="comment">%     size(delta_2)</span></span><br><span class="line"><span class="comment">%     size(a_1)</span></span><br><span class="line"><span class="comment">%     size(Theta1_grad)</span></span><br><span class="line"></span><br><span class="line">    Theta1_grad = Theta1_grad + delta_2 * a_1;</span><br><span class="line">    Theta2_grad = Theta2_grad + delta_3 * a_2;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Theta1_grad = <span class="number">1</span>/m .* Theta1_grad;</span><br><span class="line">Theta1_grad(:,<span class="number">2</span>:<span class="keyword">end</span>) = Theta1_grad(:,<span class="number">2</span>:<span class="keyword">end</span>) + lambda/m .* Theta1(:,<span class="number">2</span>:<span class="keyword">end</span>);</span><br><span class="line">Theta2_grad = <span class="number">1</span>/m .* Theta2_grad;</span><br><span class="line">Theta2_grad(:,<span class="number">2</span>:<span class="keyword">end</span>) = Theta2_grad(:,<span class="number">2</span>:<span class="keyword">end</span>) + lambda/m .* Theta2(:,<span class="number">2</span>:<span class="keyword">end</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">% -------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% =========================================================================</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% Unroll gradients</span></span><br><span class="line">grad = [Theta1_grad(:) ; Theta2_grad(:)];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/06/Mathmatic-Process-of-Back-Propagation-Derivates-in-Neural-Network/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -694,6 +266,12 @@ a^{(l)}=f(z^{(l)})</script><p>Here we define the function $f$ as the <strong>Act
         </h2>
 
         <div class="post-meta">
+          
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color=7D26CD>Top</font>
+            <span class="post-meta-divider">|</span>
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
@@ -707,7 +285,7 @@ a^{(l)}=f(z^{(l)})</script><p>Here we define the function $f$ as the <strong>Act
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-07 23:14:11" itemprop="dateModified" datetime="2020-04-07T23:14:11+08:00">2020-04-07</time>
+                <time title="Modified: 2020-04-12 13:46:01" itemprop="dateModified" datetime="2020-04-12T13:46:01+08:00">2020-04-12</time>
               </span>
 
           
@@ -743,145 +321,171 @@ J(\theta)=-\frac{1}{m}\sum_{i=1}^{m}\Big[-y^{(i)}\log(1+e^{-\theta^{T}x^{(i)}})+
 \tag{3}
 
 \end{align}</script><h1 id="Mathematic-Deduction-of-J-theta"><a href="#Mathematic-Deduction-of-J-theta" class="headerlink" title="Mathematic Deduction of  $J(\theta)$"></a>Mathematic Deduction of  $J(\theta)$</h1><p>we could observe and further do some mathematical derivation on formula$(3)$:</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/03/Derivative-of-cost-function-of-logical-regression/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/07/KNN%E5%92%8C%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="CalmCat">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CalmCat">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/07/KNN%E5%92%8C%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">KNN和朴素贝叶斯算法</a>
+        </h2>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-07 19:52:16" itemprop="dateCreated datePublished" datetime="2020-04-07T19:52:16+08:00">2020-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-12 13:46:19" itemprop="dateModified" datetime="2020-04-12T13:46:19+08:00">2020-04-12</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="朴素贝叶斯算法"><a href="#朴素贝叶斯算法" class="headerlink" title="朴素贝叶斯算法"></a>朴素贝叶斯算法</h1><h2 id="数学基础"><a href="#数学基础" class="headerlink" title="数学基础"></a>数学基础</h2><p>我们先举一个例子。投硬币是一个随机过程，我们不能预测任意一次投币结果是正面还是反面，我们只能谈论其下一次结果是正面或者反面的概率，如果容貌取得一些额外的数据，如硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况等，投币的准确结果是可以预测的。</p>
+<p>因此，我们有如下定义：<br>我们将不能获取的那些额外的数据称之为<strong>不可观测的变量(unobservable variable)</strong>。在投币的例子中，唯一<strong>可观测的变量(observable variable)</strong> 是投币的结果。我们用$z$表示不可观测的变量，用$x$表示可观测的变量，事实上我们有</p>
 <script type="math/tex; mode=display">
-\begin{align*}
-J(\theta)&=-\frac{1}{m}\sum_{i=1}^{m}[-y^{(i)}\log(1+e^{-\theta^{T}x^{(i)}})-\theta^Tx^{(i)}+y^{(i)}\theta^Tx^{(i)} -\log(1+e^{-\theta^Tx^{(i)}}) + y^{(i)}\log(1+e^{-\theta^Tx^{(i)}})
-\\&=-\frac{1}{m}\sum_{i=1}^{m}[  -   \theta^Tx^{(i)}  +  y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{-\theta^Tx^{(i)}})
-\end{align*}\tag{4}</script><p>Here <strong>note that $\theta^Tx^{(i)}=\log(e^{\theta^Tx{(i)}})$</strong>, we continue doing some derivations using formula$(4)$:</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-J(\theta)&=-\frac{1}{m}\sum_{i=1}^{m}[  -   \log(e^{\theta^Tx{(i)}})  +  y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{-\theta^Tx^{(i)}})
-\\
-&=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}\theta^Tx^{(i)}   -  \log\Big((1 + e^{-\theta^Tx^{(i)}})(e^{\theta^Tx{(i)}})\Big)\Big]
-\\
-&=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{\theta^Tx^{(i)}})\Big]
+x = f\left( z \right)</script><p>其中$f\left( \cdot<br>\right)$是一个确定性函数，他定义不可观测数据的输出。因为我们不能用这种方式对该过程进行建模，所以我们定义输出$X$为指明该过程、由概率分布$P\left(<br>X = x \right)$抽取的随机变量。</p>
+<p>如果我们不知道$P\left( X<br>\right)$，并想从给定的样本估计，就需要统计学知识了。我们有一个样本$\chi$，包含由可观测变量$x^{i}$的概率分布（记为$p\left(<br>x \right)$）抽取出的样例，目的是使用样本$\chi$构造一个它的近似$\hat{p}\left(<br>x \right)$。<br>而朴素贝叶斯算法，便是求解该过程的一个算法。</p>
+<p>我们设可以观测的条件用伯努利随机变量$C$表示，根据上文，一个最简单的$C$的定义就是观测的结果。我们用$x$表示观测变量向量，$x$的一个简单的例子便是上文投掷硬币时硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况等等。则根据贝叶斯规则，我们有如下公式：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/07/KNN%E5%92%8C%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
 
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
 
-\end{align*}</script><p>So the Cost Function of Logistic Regression can be written as:</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-J(\theta)
-&=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}\theta^Tx^{(i)}   -  \log(1 + e^{\theta^Tx^{(i)}})\Big]
-\tag{5}
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/07/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%80%E4%BB%8B/">
 
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="CalmCat">
+      <meta itemprop="description" content="">
+    </span>
 
-\end{align*}</script><h1 id="Mathematic-Deduction-of-frac-partial-J-partial-theta-j"><a href="#Mathematic-Deduction-of-frac-partial-J-partial-theta-j" class="headerlink" title="Mathematic Deduction of $\frac{\partial J}{\partial \theta_j}$"></a>Mathematic Deduction of $\frac{\partial J}{\partial \theta_j}$</h1><p>From above process, we can calculate $\frac{\partial J}{\partial \theta_i}$ more easily using formula$(5)$:</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-\frac{\partial J}{\partial \theta_j}&=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}x_j^{(i)}   -  \frac{x^{(i)}_je^{\theta^Tx^{(i)}}}{(1 + e^{\theta^Tx^{(i)}})}\Big]
-\\&=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}x_j^{(i)}   -  \frac{x^{(i)}_j}{(1 + e^{-\theta^Tx^{(i)}})}\Big]
-\end{align*}\tag{6}</script><p><strong>Notice that:</strong></p>
-<script type="math/tex; mode=display">
-h_\theta(x^{(i)})
-=\frac{1}{1+e^{-\theta^{T}x^{(i)}}}</script><p>So the formula$(6)$ can be written as:</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-\frac{\partial J}{\partial \theta_j}&=-\frac{1}{m}\sum_{i=1}^{m}\Big[ y^{(i)}x_j^{(i)}   -  h_\theta(x^{(i)})x^{(i)}_j\Big]
-\\
-&=\frac{1}{m}\sum_{i=1}^{m}\Big[ x_j^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big]
-\end{aligned}
-\tag{7}</script><p>Until now, we get the $\frac{\partial J}{\partial \theta_j}$. If we want to use MATLAB or Python to program, we could use some <strong>_Liner Algebra_</strong> knowledge to deduct it more deeply:</p>
-<script type="math/tex; mode=display">
-\begin{align}
-\left[
-    \begin{matrix}
-\frac{\partial J}{\partial \theta_0}\\
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CalmCat">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/07/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">决策树简介</a>
+        </h2>
 
-\frac{\partial J}{\partial \theta_1}\\
-\frac{\partial J}{\partial \theta_2}\\
-\vdots\\
-\frac{\partial J}{\partial \theta_n}\\
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
 
-\end{matrix}
+              <time title="Created: 2020-04-07 19:52:16" itemprop="dateCreated datePublished" datetime="2020-04-07T19:52:16+08:00">2020-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-12 13:46:58" itemprop="dateModified" datetime="2020-04-12T13:46:58+08:00">2020-04-12</time>
+              </span>
 
-\right]
-&=\frac{1}{m}\left[
-    \begin{matrix}
-        \sum_{i=1}^{m}\Big( x_0^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big)\\
-        \sum_{i=1}^{m}\Big( x_1^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big)\\
-        \sum_{i=1}^{m}\Big( x_2^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big)\\
-        \vdots\\
-        \sum_{i=1}^{m}\Big( x_n^{(i)}\big( h_\theta(x^{(i)})-y^{(i)}\big)\Big)\\
+          
 
-    \end{matrix}
-    \right]\tag{8}
-    \end{align}</script><p>In formula $(8)$, we found that the $\big( h_\theta(x^{(i)})-y^{(i)}\big)$ is a <em>scalar(single number)</em>, and the $x_j^{(i)}$denotes the <strong><em>$j^{th}$</em></strong> parameter in the <strong><em>$i^{th}$</em></strong> example, which also is  <em>constant</em>, so we can conclude that:</p>
-<script type="math/tex; mode=display">
-\begin{align}
-\left[
-    \begin{matrix}
-\frac{\partial J}{\partial \theta_0}\\
+        </div>
+      </header>
 
-\frac{\partial J}{\partial \theta_1}\\
-\frac{\partial J}{\partial \theta_2}\\
-\vdots\\
-\frac{\partial J}{\partial \theta_n}\\
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
-\end{matrix}
-
-\right]
-&=\frac{1}{m}\sum^m_{i=1}\Big(\big(h_\theta(x^{(i)})-y^{(i)}\big)x^{(i)}\Big)\tag{9}
-\end{align}</script><p>in which </p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-x^{(i)}=
-\left[
-\begin{matrix}
-x^{(i)}_0\\
-x^{(i)}_1\\
-x^{(i)}_2\\
-\vdots\\
-x^{(i)}_n\\
-\end{matrix}
-\right]
-\end{aligned}</script><p>Finally using the above formula we have:</p>
-<script type="math/tex; mode=display">
-\begin{align}
-\left[
-    \begin{matrix}
-\frac{\partial J}{\partial \theta_0}\\
-
-\frac{\partial J}{\partial \theta_1}\\
-\frac{\partial J}{\partial \theta_2}\\
-\vdots\\
-\frac{\partial J}{\partial \theta_n}\\
-
-\end{matrix}
-
-\right]
-=\frac{1}{m}X^T(h_\theta(x)-y)\tag{10}
-\end{align}</script><p>where </p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-&X=
-\left[
-    \begin{matrix}
-        x^{(1)}_0 & x^{(1)}_1 & x^{(1)}_2 & x^{(1)}_3 & \cdots & x^{(1)}_n\\
-        x^{(2)}_0 & x^{(2)}_1 & x^{(2)}_2 & x^{(2)}_3 & \cdots & x^{(2)}_n\\
-        x^{(3)}_0 & x^{(3)}_1 & x^{(3)}_2 & x^{(3)}_3 & \cdots & x^{(3)}_n\\
-        \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
-        x^{(m)}_0 & x^{(m)}_1 & x^{(m)}_2 & x^{(m)}_3 & \cdots & x^{(m)}_n\\
-
-    \end{matrix}
-\right]
-\\\\\\
-&h_\theta(x)-y = \left[
-    \begin{matrix}
-        h_\theta(x^{(1)})-y^{(1)}\\
-        h_\theta(x^{(2)})-y^{(2)}\\
-        h_\theta(x^{(3)})-y^{(3)}\\
-        \vdots\\
-        h_\theta(x^{(m)})-y^{(m)}\\
-    \end{matrix}    
-    \right]
-\end{aligned}</script><p>We could easily program Logistic Regression Derivatives using formula $(10)$.</p>
-<h2 id="An-important-detail"><a href="#An-important-detail" class="headerlink" title="An important detail"></a>An important detail</h2><p>Note that $x^{(i)}_0$denotes the <strong>Bias</strong> in every example, which constantly equals to $1$. Nothing considerable <strong>unless</strong> if we add regularization methods for avoiding overfitting problem.</p>
-<h1 id="Examples-in-MATLAB"><a href="#Examples-in-MATLAB" class="headerlink" title="Examples in MATLAB"></a>Examples in MATLAB</h1><p>In this part, I use MATLAB to program the Liner Regression Cost Function. In order to avoid overfitting, I do some regularization operations (L2 regularization) to improve the quality of parameters.</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[J, grad]</span> = <span class="title">lrCostFunction</span><span class="params">(theta, X, y, lambda)</span></span></span><br><span class="line"><span class="comment">%LRCOSTFUNCTION Compute cost and gradient for logistic regression with </span></span><br><span class="line"><span class="comment">%regularization</span></span><br><span class="line"><span class="comment">%   J = LRCOSTFUNCTION(theta, X, y, lambda) computes the cost of using</span></span><br><span class="line"><span class="comment">%   theta as the parameter for regularized logistic regression and the</span></span><br><span class="line"><span class="comment">%   gradient of the cost w.r.t. to the parameters. </span></span><br><span class="line"></span><br><span class="line"><span class="comment">% Initialize some useful values</span></span><br><span class="line">m = <span class="built_in">length</span>(y); <span class="comment">% number of training examples</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% You need to return the following variables correctly </span></span><br><span class="line">J = <span class="number">0</span>;</span><br><span class="line">grad = <span class="built_in">zeros</span>(<span class="built_in">size</span>(theta));</span><br><span class="line"></span><br><span class="line"><span class="comment">% =============================================================</span></span><br><span class="line">h_x = sigmoid(X*theta);</span><br><span class="line"></span><br><span class="line">grad = <span class="number">1</span>/m .*(X' * (h_x - y));</span><br><span class="line">temp = theta; </span><br><span class="line">temp(<span class="number">1</span>) = <span class="number">0</span>;   <span class="comment">% because we don't add anything for j = 0  </span></span><br><span class="line">J = <span class="number">1</span>/m*(sum(-y.*<span class="built_in">log</span>(h_x) - (<span class="number">1</span>-y) .* <span class="built_in">log</span>(<span class="number">1</span>-h_x))) + lambda/(<span class="number">2</span>*m) .* sum(temp.^<span class="number">2</span>);</span><br><span class="line">grad = grad + lambda ./ m .* temp;</span><br><span class="line"></span><br><span class="line"><span class="comment">% =============================================================</span></span><br><span class="line"></span><br><span class="line">grad = grad(:);</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">g</span> = <span class="title">sigmoid</span><span class="params">(z)</span></span></span><br><span class="line"><span class="comment">%SIGMOID Compute sigmoid functoon</span></span><br><span class="line"><span class="comment">%   J = SIGMOID(z) computes the sigmoid of z.</span></span><br><span class="line"></span><br><span class="line">g = <span class="number">1.0</span> ./ (<span class="number">1.0</span> + <span class="built_in">exp</span>(-z));</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[1] Andrew Ng, Machine Learning Course in Coursera. <a href="https://www.coursera.org/learn/machine-learning" target="_blank" rel="noopener">https://www.coursera.org/learn/machine-learning</a></p>
-<p>[2] Neural Networks and Deep Learning. <a href="https://nndl.github.io/" target="_blank" rel="noopener">https://nndl.github.io/</a></p>
-
+      
+          <h1 id="决策树简介"><a href="#决策树简介" class="headerlink" title="决策树简介"></a>决策树简介</h1><p>决策树是一种实现分支策略的层次数据结构。他是一种有效的<strong>非参数学习方法</strong>，可以用于分类和回归。</p>
+<h2 id="非参数学习方法与参数学习方法"><a href="#非参数学习方法与参数学习方法" class="headerlink" title="非参数学习方法与参数学习方法"></a>非参数学习方法与参数学习方法</h2><p>参数学习方法：在训练完成所有数据后得到一系列训练参数，然后根据训练参数来预测新样本的值，这时不再依赖之前的训练数据了，参数值是确定的。</p>
+<p>而非参数学习方法是：在预测新样本值时候每次都会重新训练数据得到新的参数值，也就是说每次预测新样本都会依赖训练数据集合，所以每次得到的参数值是不确定的。例如局部加权回归（LWR）就是非参数学习方法。</p>
+<p>决策树有二元分支树和多分枝树，一般采用二元分裂。</p>
+<p>决策树技术核心是<strong>递归分割的贪婪算法。</strong></p>
+<h2 id="决策树要解决的问题"><a href="#决策树要解决的问题" class="headerlink" title="决策树要解决的问题"></a>决策树要解决的问题</h2><ol>
+<li><p>收集待分类的数据，这些数据所有属性应该是完全标注的；</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/07/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%80%E4%BB%8B/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -918,6 +522,7 @@ x^{(i)}_n\\
         </h2>
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>

@@ -30,7 +30,7 @@
 <meta property="og:description" content="Recently I have some misconceptions of Logistic Regression so I reviewed it and tried to do some mathematical derivations manually. Generally SpeakingIn general, suppose we have $m$ examples and $n$ p">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-03T08:52:16.000Z">
-<meta property="article:modified_time" content="2020-04-07T15:14:11.947Z">
+<meta property="article:modified_time" content="2020-04-12T05:46:01.609Z">
 <meta property="article:author" content="CalmCat">
 <meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
@@ -182,6 +182,12 @@
         </h1>
 
         <div class="post-meta">
+          
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color=7D26CD>Top</font>
+            <span class="post-meta-divider">|</span>
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
@@ -195,7 +201,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-07 23:14:11" itemprop="dateModified" datetime="2020-04-07T23:14:11+08:00">2020-04-07</time>
+                <time title="Modified: 2020-04-12 13:46:01" itemprop="dateModified" datetime="2020-04-12T13:46:01+08:00">2020-04-12</time>
               </span>
 
           
@@ -231,6 +237,7 @@ J(\theta)=-\frac{1}{m}\sum_{i=1}^{m}\Big[-y^{(i)}\log(1+e^{-\theta^{T}x^{(i)}})+
 \tag{3}
 
 \end{align}</script><h1 id="Mathematic-Deduction-of-J-theta"><a href="#Mathematic-Deduction-of-J-theta" class="headerlink" title="Mathematic Deduction of  $J(\theta)$"></a>Mathematic Deduction of  $J(\theta)$</h1><p>we could observe and further do some mathematical derivation on formula$(3)$:</p>
+<a id="more"></a>
 <script type="math/tex; mode=display">
 \begin{align*}
 J(\theta)&=-\frac{1}{m}\sum_{i=1}^{m}[-y^{(i)}\log(1+e^{-\theta^{T}x^{(i)}})-\theta^Tx^{(i)}+y^{(i)}\theta^Tx^{(i)} -\log(1+e^{-\theta^Tx^{(i)}}) + y^{(i)}\log(1+e^{-\theta^Tx^{(i)}})

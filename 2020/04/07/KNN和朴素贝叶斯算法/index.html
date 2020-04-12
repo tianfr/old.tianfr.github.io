@@ -30,7 +30,7 @@
 <meta property="og:description" content="朴素贝叶斯算法数学基础我们先举一个例子。投硬币是一个随机过程，我们不能预测任意一次投币结果是正面还是反面，我们只能谈论其下一次结果是正面或者反面的概率，如果容貌取得一些额外的数据，如硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况等，投币的准确结果是可以预测的。 因此，我们有如下定义：我们将不能获取的那些额外的数据称之为不可观测的变量(unobservable variable">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-07T11:52:16.000Z">
-<meta property="article:modified_time" content="2020-04-07T12:00:45.808Z">
+<meta property="article:modified_time" content="2020-04-12T05:46:19.642Z">
 <meta property="article:author" content="CalmCat">
 <meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
@@ -182,15 +182,22 @@
         </h1>
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-04-07 19:52:16 / Modified: 20:00:45" itemprop="dateCreated datePublished" datetime="2020-04-07T19:52:16+08:00">2020-04-07</time>
+              <time title="Created: 2020-04-07 19:52:16" itemprop="dateCreated datePublished" datetime="2020-04-07T19:52:16+08:00">2020-04-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-12 13:46:19" itemprop="dateModified" datetime="2020-04-12T13:46:19+08:00">2020-04-12</time>
+              </span>
 
           
 
@@ -209,6 +216,7 @@
 x = f\left( z \right)</script><p>其中$f\left( \cdot<br>\right)$是一个确定性函数，他定义不可观测数据的输出。因为我们不能用这种方式对该过程进行建模，所以我们定义输出$X$为指明该过程、由概率分布$P\left(<br>X = x \right)$抽取的随机变量。</p>
 <p>如果我们不知道$P\left( X<br>\right)$，并想从给定的样本估计，就需要统计学知识了。我们有一个样本$\chi$，包含由可观测变量$x^{i}$的概率分布（记为$p\left(<br>x \right)$）抽取出的样例，目的是使用样本$\chi$构造一个它的近似$\hat{p}\left(<br>x \right)$。<br>而朴素贝叶斯算法，便是求解该过程的一个算法。</p>
 <p>我们设可以观测的条件用伯努利随机变量$C$表示，根据上文，一个最简单的$C$的定义就是观测的结果。我们用$x$表示观测变量向量，$x$的一个简单的例子便是上文投掷硬币时硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况等等。则根据贝叶斯规则，我们有如下公式：</p>
+<a id="more"></a>
 <script type="math/tex; mode=display">
 p\left( \left. C \right|x \right) = \frac{p\left( C \right)p\left( \left. x \right|C \right)}{p\left( x \right)}</script><p>如何理解这个公式？我们还拿掷硬币的例子来说。假设我们投掷了1000次硬币，我们利用某些手段精确的得到了这1000次掷硬币时每次硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况以及每次掷硬币的结果；当我们掷硬币第1001次时，在观测结果之前，我们已经得到这次掷硬币时硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况，那么我们如何预测这1001次掷硬币的结果？我们可以根据以往掷硬币的经验，判断在1001次掷硬币时，利用获得到的观测到的硬币的精准成分，硬币的最初位置，投币的力量与方向，硬币的落地点的情况这些因素值与之前投掷时其所有取值完全相同的所有的掷硬币的实验相比较，计算这些取值相同的实验中出现正面的次数和出现反面的次数的比例，而这个比例，便是这次掷硬币结果是正面和反面的概率。用公式表示，则为：</p>
 <script type="math/tex; mode=display">
